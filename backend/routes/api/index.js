@@ -28,8 +28,8 @@ router.use('/spot-images', spotImagesDelRouter);
 
 router.use('/review-images', reviewImagesDelRoutes);
 
-router.post('/test', (req, res) => {
-  res.json({ requestBody: req.body });
-});
+// router.post('/test', (req, res) => {
+//   res.json({ requestBody: req.body });
+// });
 
 module.exports = router;
