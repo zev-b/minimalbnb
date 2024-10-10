@@ -45,6 +45,16 @@ export const login = (credential, password) => async (dispatch) => {
     return res;
 }
 
+export const logout = () => async (dispatch) => {
+    const res = await csrfFetch('/api/session', {
+        method: "DELETE",
+    });
+    if (res.ok) {
+        dispatch(logoutUser());
+        return res.json();
+    }
+}
+
 
 const initialState = { user: null };
 
@@ -52,6 +62,9 @@ const sessionReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN_USER: {
             return { ...state, user: action.user };
+        }
+        case LOGOUT_USER: {
+            return { ...state, user: null };
         }
         default: 
         return state;
