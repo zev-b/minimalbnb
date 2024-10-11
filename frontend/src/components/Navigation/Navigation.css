@@ -1,3 +1,11 @@
 .hidden {
-    display: none
+    display: none;
 }
+
+.logo-image {
+    width: 60px;
+    /* height: auto;  */
+    /* margin-left: 5px;  */
+    /* margin-top: px;  */
+    border-radius: 50%;
+  }
