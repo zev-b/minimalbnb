@@ -38,16 +38,15 @@ const seedData = [
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await SpotImage.bulkCreate(seedData)
-  },
-  // ,  { validate: true }
+    await SpotImage.bulkCreate(seedData, { validate: true })
+  }, //{ validate: true }
+
   async down (queryInterface, Sequelize) {
     options.tableName = 'SpotImages';
     // const Op = Sequelize.Op;
     // return queryInterface.bulkDelete(options, {
     //   url: { [Op.in]: ['../assets/wing-chair.png', '../assets/wing-chair2.png', '../assets/bleachers.png', '../assets/haunted-bench.png', '../assets/pew-pew.png'] }
     // }, {})
-
     for (const img of seedData) {
       await SpotImage.destroy({ where: img });
     }

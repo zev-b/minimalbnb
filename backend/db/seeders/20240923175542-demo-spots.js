@@ -7,11 +7,8 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object 
 }
 
-/** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up (queryInterface, Sequelize) {
-    await Spot.bulkCreate([
-    //   {
+const seedData = [
+    //  {
     //     ownerId: 1,
     //     address: "123 Sesame Street",
     //     city: "Lakeview",
@@ -83,15 +80,24 @@ module.exports = {
     //     description: "Saturated bamboo and polinated Lilies, towels provided",
     //     price: 199.50,
     //   }
-    ], { validate: true });
+]
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    await Spot.bulkCreate(seedData)
   },
 
   async down (queryInterface, Sequelize) {
     
     options.tableName = 'Spots';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ["Wing Chair", "The Bleachers", "The Haunted Bench", "Pew Pew"] }
-    }, {});
+    // const Op = Sequelize.Op;
+    // return queryInterface.bulkDelete(options, {
+    //   name: { [Op.in]: ["Wing Chair", "The Bleachers", "The Haunted Bench", "Pew Pew"] }
+    // }, {});
+
+    for (const spot of seedData) {
+      await Spot.destroy({ where: spot });
+    }
   }
 };
