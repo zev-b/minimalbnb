@@ -1,0 +1,80 @@
+.spot-details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .spot-images {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .large-image {
+    width: 60%;
+    height: 400px;
+    object-fit: cover;
+  }
+  
+  .small-images {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .small-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .spot-hosted-description {
+    margin-top: 20px;
+  }
+  
+  .callout-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .callout-header {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .per-night {
+    font-size: 16px;
+  }
+  
+  .rating-summary {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  
+  .reserve-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff5a5f;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .reviews-section {
+    margin-top: 40px;
+  }
+  
+  .review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .review-item h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .review-item p {
+    margin: 5px 0;
+  }

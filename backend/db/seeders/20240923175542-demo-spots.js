@@ -45,7 +45,7 @@ module.exports = {
         lng: -71.057083, 
         name: "The Bleachers", 
         description: "Great for parties !", 
-        price: 35.50,
+        price: 35.00,
       },
       {
         ownerId: 2,

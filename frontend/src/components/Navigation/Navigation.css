@@ -8,4 +8,39 @@
     /* margin-left: 5px;  */
     /* margin-top: px;  */
     border-radius: 50%;
-  }
+} 
+
+ul {
+    display: flex; /* Use flexbox for the list */
+    justify-content: space-between; /* Space between logo and buttons */
+    align-items: center; /* Center items vertically */
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+} 
+
+li {
+    display: flex; /* Ensure li elements can be flex items */
+    justify-content: space-between;
+} 
+
+.profile-dropdown {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+  
+  .profile-dropdown li {
+    padding: 5px;
+}
+  
+  .profile-dropdown button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}

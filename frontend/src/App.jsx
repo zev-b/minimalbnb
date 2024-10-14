@@ -5,6 +5,10 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import * as sessionActions from './store/session';
 
+import SpotsList from './components/SpotsList/SpotsList';
+// import * as spotsListActions from './store/spots'; 
+import SpotDetails from './components/SpotDetails/SpotDetails';
+
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -28,8 +32,12 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: '/',
-        element: <h1>Welcome to the Home Page!</h1>
+        path: '/',          // landing page all spots
+        element: <SpotsList />
+      },
+      {
+        path: '/spots/:spotId',  // spot-detail page
+        element: <SpotDetails />
       }
     ]
   }

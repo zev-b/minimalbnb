@@ -15,11 +15,11 @@ function calcReviews(reviews) {
     }
     return count;
 }
-function calcAvg(reviews) { 
 
+function calcAvg(reviews) { 
     if (!reviews) { // Check if reviews is undefined or null
         return 0; // Return 0 if no reviews
-      }
+    }
 
     const rating = reviews.map(review => review.stars); //! Extract the stars from EACH review
     let totalRating = 0; 
