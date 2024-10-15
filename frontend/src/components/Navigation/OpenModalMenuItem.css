@@ -1,0 +1,10 @@
+li {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+}
+
+li:hover {
+    background-color: #f0f0f0;
+}

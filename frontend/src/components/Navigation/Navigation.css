@@ -1,46 +1,67 @@
-.hidden {
-    display: none;
+ul {
+    position: relative;
+    display: flex;
+    justify-content: space-between; /* Align logo to the left and profile button to the right */
+    align-items: center;
+    padding: 0 20px; /* Add padding to create space between items */
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+li {
+    list-style: none;
 }
 
 .logo-image {
     width: 60px;
-    /* height: auto;  */
-    /* margin-left: 5px;  */
-    /* margin-top: px;  */
-    border-radius: 50%;
-} 
+    height: 60px; /* Ensure equal height and width */
+    border-radius: 50%; /* Makes it circular */
+    object-fit: cover; /* Ensures the image fits within the container */
+}
 
-ul {
-    display: flex; /* Use flexbox for the list */
-    justify-content: space-between; /* Space between logo and buttons */
-    align-items: center; /* Center items vertically */
-    list-style-type: none; /* Remove default list styling */
-    padding: 0; /* Remove default padding */
-    margin: 0; /* Remove default margin */
-} 
+.profile-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px; /* Pill-like appearance */
+    background-color: #444;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-li {
-    display: flex; /* Ensure li elements can be flex items */
-    justify-content: space-between;
-} 
+.profile-button:hover {
+    background-color: #666;
+}
 
 .profile-dropdown {
+    position: absolute;
+     /* Adjust this to make the dropdown appear directly under the button */
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #87683d;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 180px; 
+}
+
+.profile-dropdown li {
+    color: #333;
+}
+
+.profile-dropdown button {
+    width: 100%;
+    background-color: #795548;
+    color: white;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
 }
-  
-  .profile-dropdown li {
-    padding: 5px;
+
+body {
+    margin: 0; /* Reset browser default margin */
+    padding: 0; /* Remove any default padding */
 }
-  
-  .profile-dropdown button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
+
+.container {
+    padding-top: 0px; /* Adjust padding based on your design */
+    margin-top: 0px;
 }

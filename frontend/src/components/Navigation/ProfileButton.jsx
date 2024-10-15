@@ -3,10 +3,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { HiMiniUser } from "react-icons/hi2";
+import { CiMenuBurger } from "react-icons/ci";
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
+import './ProfileButton.css';
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
@@ -45,7 +47,8 @@ function ProfileButton({ user }) {
     return (
       <>
         <button onClick={toggleMenu}>
-        <HiMiniUser />
+            <CiMenuBurger />
+            <HiMiniUser />
         </button>
         <ul className={ulClassName} ref={ulRef}>
           {user ? (

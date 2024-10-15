@@ -167,12 +167,12 @@ router.get('/', async (req, res) => {
           {
             model: Review,
             as: 'Reviews',
-            attributes: [],
+            // attributes: [],
           },
           {
             model: SpotImage,
             as: 'SpotImages',
-            attributes: [], 
+            // attributes: [], 
           }
         ],
         limit: req.query.size || 20, // defaulted to 20
@@ -214,11 +214,14 @@ router.get('/', async (req, res) => {
         };
     }
 
+    console.log(`\n === QueryOptions ===`, queryOptions);
+
     const allSpots = await Spot.findAll(queryOptions); 
 
-    const spotDeets =  await Promise.all(allSpots.map(spot => {
+    const spotDeets =  await allSpots.map(spot => {
         const avgRating = calcAvg(spot.Reviews);
         const previewImg = getPreviewImg(spot.SpotImages);
+        // console.log(spot, `Preview==================`)
         return {
             id: spot.id,
             ownerId: spot.ownerId,
@@ -236,7 +239,7 @@ router.get('/', async (req, res) => {
             avgRating: avgRating,
             previewImage: previewImg
         }
-    })); 
+    }); 
 
     return res.status(200).json({ Spots: spotDeets, page: req.query.page || 1, size: req.query.size || 20 });
 // } catch (error) {

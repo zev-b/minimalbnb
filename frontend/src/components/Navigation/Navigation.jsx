@@ -11,7 +11,7 @@ function Navigation({ isLoaded }) {
   return (
     <ul>
       <li>
-        <NavLink to="/"><img className="logo-image" src="/Screenshot 2024-10-11 162225.png" alt="" /></NavLink>
+        <NavLink to="/"><img className="logo-image" src="/Screenshot 2024-10-11 162225.png" alt="" />Affordable Spots</NavLink>
       </li>
       {isLoaded && (
         <li>

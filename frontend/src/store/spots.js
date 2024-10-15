@@ -14,19 +14,38 @@ export const loadSpotDetails = (spot) => ({
 });
 
 
+// export const fetchSpots = () => async (dispatch) => {
+//     const response = await fetch('/api/spots');
+//     if (response.ok) {
+//         // const spots = await response.json();
+//         // dispatch(loadSpots(spots));
+//         const data = await response.json();
+//         if (Array.isArray(data.Spots)) {  
+//             dispatch(loadSpots(data.Spots));
+//           } else {
+//             console.error("response is not an array", data);
+//           }
+//         // return spots;
+//     }   else {
+//         console.error('Failed to fetch spots');
+//     }
+// };
+
 export const fetchSpots = () => async (dispatch) => {
     const response = await fetch('/api/spots');
     if (response.ok) {
-        // const spots = await response.json();
-        // dispatch(loadSpots(spots));
         const data = await response.json();
-        if (Array.isArray(data.Spots)) {  
-            dispatch(loadSpots(data.Spots));
-          } else {
+        if (Array.isArray(data.Spots)) {
+            // Convert the array of spots into an object using spot IDs as keys
+            const spotsObject = data.Spots.reduce((acc, spot) => {
+                acc[spot.id] = spot; // Use the spot's ID as the key
+                return acc;
+            }, {});
+            dispatch(loadSpots(spotsObject));
+        } else {
             console.error("response is not an array", data);
-          }
-        // return spots;
-    }   else {
+        }
+    } else {
         console.error('Failed to fetch spots');
     }
 };
@@ -41,12 +60,12 @@ export const fetchSpotDetails = (spotId) => async (dispatch) => {
     }
 }
 
-const initialState = { allSpots: [], spotDetails: null };
+const initialState = { allSpots: {}, spotDetails: null };
 
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SPOTS:
-      return { ...state, allSpots: action.spots };
+      return { ...state, allSpots: { ...state.allSpots, ...action.spots } };
     case LOAD_SPOT_DETAILS: 
     return { ...state, spotDetails: action.spot }
     default:
