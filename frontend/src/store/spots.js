@@ -1,5 +1,6 @@
 const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 const LOAD_SPOT_DETAILS = 'spots/LOAD_SPOT_DETAILS';
+const LOAD_REVIEWS = 'spots/LOAD_REVIEWS';
 
 
 
@@ -12,6 +13,11 @@ export const loadSpotDetails = (spot) => ({
     type: LOAD_SPOT_DETAILS,
     spot
 });
+
+export const loadReviews = (reviews) => ({
+    type: LOAD_REVIEWS,
+    reviews
+})
 
 
 // export const fetchSpots = () => async (dispatch) => {
@@ -60,14 +66,26 @@ export const fetchSpotDetails = (spotId) => async (dispatch) => {
     }
 }
 
-const initialState = { allSpots: {}, spotDetails: null };
+export const fetchReviews = (spotId) => async (dispatch) => {
+    const response = await fetch(`/api/spots/${spotId}/reviews`);
+    if (response.ok) {
+        const reviews = await response.json();
+        dispatch(loadReviews(reviews));
+    } else {
+        console.error(`Failed to get reviews for spotId: ${spotId} `);
+    }
+}
+
+const initialState = { allSpots: {}, spotDetails: null, reviews: [] };
 
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SPOTS:
       return { ...state, allSpots: { ...state.allSpots, ...action.spots } };
     case LOAD_SPOT_DETAILS: 
-    return { ...state, spotDetails: action.spot }
+      return { ...state, spotDetails: action.spot };
+    case LOAD_REVIEWS: 
+      return { ...state, reviews: action.reviews.Reviews }
     default:
       return state;
   }

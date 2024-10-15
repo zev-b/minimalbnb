@@ -1,18 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { fetchSpotDetails } from "../../store/spots";
+import { fetchReviews, fetchSpotDetails } from "../../store/spots";
 import './SpotDetails.css';
 
 function SpotDetails() {
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const spot = useSelector((state) => state.spots.spotDetails);
+    const reviews = useSelector((state) => state.spots.reviews)
 
     console.log("spotId from URL:", spotId);
 
     useEffect(() => {
         dispatch(fetchSpotDetails(spotId));
+        dispatch(fetchReviews(spotId));
     }, [dispatch, spotId]);
 
     if (!spot) return <p>En route...</p>
@@ -61,9 +63,9 @@ function SpotDetails() {
             {/* Reviews Section */}
             <div className="reviews-section">
             <h2>{reviewSummary}</h2>
-            {Reviews.length > 0 ? (
+            {reviews.length > 0 ? (
                 <ul>
-                {Reviews.map((review) => (
+                {reviews.map((review) => (
                     <li key={review.id} className="review-item">
                     <h3>{review.User.firstName}</h3>
                     <p>{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
