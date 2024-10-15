@@ -1,6 +1,6 @@
-.spots-list {
+/* .spots-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); /* Responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); 
     gap: 20px;
     padding: 20px;
   }
@@ -27,7 +27,8 @@
   
   .spot-info {
     padding: 10px;
-    text-align: left;
+    display: flex;
+    justify-content: space-between;
   }
   
   .spot-info div {
@@ -37,5 +38,65 @@
   
   .spot-info span {
     font-size: 18px;
-    color: #ff5a5f; /* AirBnB red color */
-  }
+    color: #aa883d;
+  } */
+
+.spots-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.spot-tile {
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.spot-tile:hover {
+    transform: scale(1.05);
+}
+
+.spot-thumbnail {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.spot-info {
+    padding: 10px;
+    text-align: left;
+}
+
+.spot-info div {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.location-rating {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 5px;
+}
+
+.spot-rating {   
+    display: flex;
+    align-items: center;
+}
+
+.star-icon {
+    color: #c7a923; 
+    margin-right: 5px; 
+    font-size: 18px;
+}
+
+.spot-info span {
+    font-size: 18px;
+    color: #996f05;    
+}

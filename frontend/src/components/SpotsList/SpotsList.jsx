@@ -35,12 +35,16 @@ function SpotsList() {
                 title={spot.name}
                 >
                 <img src={spot.previewImage}alt={`${spot.name} -Image`} className="spot-thumbnail" /> 
-                <div>{spot.city}, {spot.state}</div>
-                <div>
-                    {spot.avgRating > 0 ? spot.avgRating.toFixed(1) : 'New'}
-                    <span>★</span>
-                </div>
-                <div>${spot.price} / night</div>
+                <div className="spot-info">
+                     <div className="location-rating">
+                        <span>{spot.city}, {spot.state}</span>
+                             <div className="spot-rating">
+                                 <span className="star-icon">★ </span> 
+                                     {spot.avgRating > 0 ? spot.avgRating.toFixed(1) : 'New'}
+                             </div>
+                         </div>
+                         <div>${spot.price} / night</div>
+                    </div>
                 </div>
             ))}
         </div>

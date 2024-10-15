@@ -19,7 +19,7 @@ function SpotDetails() {
 
     const { name, city, state, country, SpotImages, description, price, Owner, avgStarRating, numReviews, Reviews = [] } = spot;
 
-    const ratingDisplay = avgStarRating ? `${avgStarRating.toFixed(1)} ★` : 'New';
+    const ratingDisplay = avgStarRating ? `★ ${avgStarRating.toFixed(1)}` : 'New';
   const reviewSummary = numReviews > 0
     ? `${ratingDisplay} · ${numReviews} ${numReviews === 1 ? 'Review' : 'Reviews'}`
     : ratingDisplay;

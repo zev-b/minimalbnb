@@ -29,6 +29,41 @@ const seedData = [
     email: 'user2@user.io',
     username: 'FrankTest',
     hashedPassword: bcrypt.hashSync('frankly')
+  },
+  {
+    firstName: "Bruce",
+    lastName: "Wayne",
+    email: 'vengeance@batcave.io',
+    username: 'dark-knight',
+    hashedPassword: bcrypt.hashSync('clownsarestupid')
+  },
+  {
+    firstName: "Leonardo",
+    lastName: "DaVinci",
+    email: 'ninja1@turtles.io',
+    username: 'turtledavinci',
+    hashedPassword: bcrypt.hashSync('wisdom')
+  },
+  {
+    firstName: "Michelangelo",
+    lastName: "NotaTurtle",
+    email: 'ninja2@turtles.io',
+    username: 'turtleBuonarroti',
+    hashedPassword: bcrypt.hashSync('jokester')
+  },
+  {
+    firstName: "Donatello",
+    lastName: "Turtle",
+    email: 'ninja3@turtles.io',
+    username: 'thebrains',
+    hashedPassword: bcrypt.hashSync('brainiac')
+  },
+  {
+    firstName: "Raphael",
+    lastName: "Bruiser",
+    email: 'ninja4@turtles.io',
+    username: 'dont-try-me',
+    hashedPassword: bcrypt.hashSync('toughguy')
   }
 ]
 
