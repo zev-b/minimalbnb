@@ -495,7 +495,13 @@ router.delete('/:spotId', restoreUser, requireAuth, async (req, res) => {
  
 
 router.get('/:spotId/reviews', async (req, res) => {
-    const { spotId } = req.params;
+    const { spotId } = req.params; 
+
+    const spot = await Spot.findByPk(req.params.spotId); 
+
+    if (!spot) {
+        return res.status(404).json({ message: "Spot couldn't be found" });
+    }
   
     try {
       const reviews = await Review.findAll({
@@ -514,10 +520,6 @@ router.get('/:spotId/reviews', async (req, res) => {
           },
         ],
       });
-  
-      if (!reviews.length) {
-        return res.status(404).json({ message: "Spot couldn't be found" });
-      }
   
       const reviewsWithImages = reviews.map((review) => {
         const jsonReview = review.toJSON();

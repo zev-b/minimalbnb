@@ -4,6 +4,7 @@ import { fetchSpots } from "../../store/spots";
 import { useNavigate } from "react-router-dom";
 import './SpotsList.css';
 // import spot from "../../../../backend/db/models/spot";
+import { RiStarSFill } from "react-icons/ri";
 
 function SpotsList() {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function SpotsList() {
 
     const spotsArray = Object.values(spots);
     
-    console.log("Spots Array:", spotsArray);
+    // console.log("Spots Array:", spotsArray);
 
     const handleTileClick = (spotId) => {
         navigate(`/spots/${spotId}`);
@@ -39,11 +40,11 @@ function SpotsList() {
                      <div className="location-rating">
                         <span>{spot.city}, {spot.state}</span>
                              <div className="spot-rating">
-                                 <span className="star-icon">★ </span> 
-                                     {spot.avgRating > 0 ? spot.avgRating.toFixed(1) : 'New'}
+                                 <span className="star-icon"><RiStarSFill className="star-icon"/></span> 
+                                     {spot.avgRating > 0 ? spot.avgRating.toFixed(2) : 'New'}
                              </div>
                          </div>
-                         <div>${spot.price} / night</div>
+                         <div>${spot.price.toFixed(2)} / night</div>
                     </div>
                 </div>
             ))}

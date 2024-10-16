@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchReviews, fetchSpotDetails } from "../../store/spots";
 import './SpotDetails.css';
+import { RiStarSFill } from "react-icons/ri";
 
 function SpotDetails() {
     const { spotId } = useParams();
@@ -10,19 +11,21 @@ function SpotDetails() {
     const spot = useSelector((state) => state.spots.spotDetails);
     const reviews = useSelector((state) => state.spots.reviews)
 
-    console.log("spotId from URL:", spotId);
+    // console.log("spotId from URL:", spotId);
 
     useEffect(() => {
         dispatch(fetchSpotDetails(spotId));
         dispatch(fetchReviews(spotId));
     }, [dispatch, spotId]);
 
+
     if (!spot) return <p>En route...</p>
 
-    const { name, city, state, country, SpotImages, description, price, Owner, avgStarRating, numReviews, Reviews = [] } = spot;
+    const { name, city, state, country, SpotImages, description, price, Owner, avgStarRating, numReviews } = spot;
 
-    const ratingDisplay = avgStarRating ? `★ ${avgStarRating.toFixed(1)}` : 'New';
-  const reviewSummary = numReviews > 0
+    const ratingDisplay = avgStarRating ? `${avgStarRating.toFixed(2)}` : 'New';
+
+    const reviewSummary = numReviews > 0
     ? `${ratingDisplay} · ${numReviews} ${numReviews === 1 ? 'Review' : 'Reviews'}`
     : ratingDisplay;
 
@@ -37,10 +40,10 @@ function SpotDetails() {
             
             {/* Images Section */}
             <div className="spot-images">
-            <img className="large-image" src={SpotImages[0]?.url || '/placeholder.png'} alt="Main spot" />
+            <img className="large-image" src={SpotImages.find(img => img.preview)?.url || SpotImages[0].url} alt="Main spot" />
             <div className="small-images">
-                {SpotImages.slice(1, 5).map((image, index) => (
-                <img key={index} className="small-image" src={image.url || '/placeholder.png'} alt={`Image ${index + 1}`} />
+                {SpotImages.filter(img => !img.preview).slice(0, 4).map((image, index) => (
+                <img key={index} className="small-image" src={image.url} alt={`Image ${index + 1}`} />
                 ))}
             </div>
             </div>
@@ -51,18 +54,18 @@ function SpotDetails() {
             <p>{description}</p>
             </div>
 
-            {/* Callout Box (Price, Rating, Reserve Button) */}
+            {/* Callout Box (price, rating, reserve Button) */}
             <div className="callout-box">
             <div className="callout-header">
-                <span className="price">${price}</span> <span className="per-night">/ night</span>
+                <span className="price">${price.toFixed(2)}</span> <span className="per-night">/ night</span>
             </div>
-            <div className="rating-summary">{reviewSummary}</div>
+            <div className="rating-summary"><RiStarSFill className="first-star-icon"/> {reviewSummary}</div>
             <button className="reserve-button" onClick={handleReserveClick}>Reserve</button>
             </div>
 
             {/* Reviews Section */}
             <div className="reviews-section">
-            <h2>{reviewSummary}</h2>
+            <h2><RiStarSFill className="star-icon"/>{reviewSummary}</h2>
             {reviews.length > 0 ? (
                 <ul>
                 {reviews.map((review) => (

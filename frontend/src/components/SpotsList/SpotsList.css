@@ -96,6 +96,11 @@
     font-size: 18px;
 }
 
+.first-star-icon {
+    color: #c7a923;
+    /* margin-top: 2px; */
+}
+
 .spot-info span {
     font-size: 18px;
     color: #996f05;    

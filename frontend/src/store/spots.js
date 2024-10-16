@@ -70,13 +70,17 @@ export const fetchReviews = (spotId) => async (dispatch) => {
     const response = await fetch(`/api/spots/${spotId}/reviews`);
     if (response.ok) {
         const reviews = await response.json();
-        dispatch(loadReviews(reviews));
+        dispatch(loadReviews(reviews?.Reviews));
     } else {
         console.error(`Failed to get reviews for spotId: ${spotId} `);
     }
 }
 
-const initialState = { allSpots: {}, spotDetails: null, reviews: [] };
+const initialState = { 
+    allSpots: {}, 
+    spotDetails: null, 
+    reviews: [],
+};
 
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -85,7 +89,7 @@ const spotsReducer = (state = initialState, action) => {
     case LOAD_SPOT_DETAILS: 
       return { ...state, spotDetails: action.spot };
     case LOAD_REVIEWS: 
-      return { ...state, reviews: action.reviews.Reviews }
+      return { ...state, reviews: action.reviews }
     default:
       return state;
   }
