@@ -38,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: '/spots/:spotId',  // spot-detail page
         element: <SpotDetails />
+      },
+      {
+        path: '/spots/new',
+        element: <CreateSpotPage />
       }
     ]
   }

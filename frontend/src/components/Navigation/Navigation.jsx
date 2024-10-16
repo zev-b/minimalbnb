@@ -1,6 +1,6 @@
 // frontend/src/components/Navigation/Navigation.jsx
 
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
@@ -15,6 +15,7 @@ function Navigation({ isLoaded }) {
       </li>
       {isLoaded && (
         <li>
+            {!!sessionUser && (<Link to='/spots/new' className="create-spot-button">Create a New Spot</Link>)}
           <ProfileButton user={sessionUser} />
         </li>
       )}

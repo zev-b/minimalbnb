@@ -56,6 +56,23 @@ li {
     border-radius: 5px;
 }
 
+.create-spot-button {
+    padding: 10px 15px;
+    background-color: #cbbd8b; /* Airbnb red */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    text-decoration: none;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .create-spot-button:hover {
+    background-color: #da7f0f;
+  }
+
 body {
     margin: 0; /* Reset browser default margin */
     padding: 0; /* Remove any default padding */
