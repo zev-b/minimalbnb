@@ -1,6 +1,9 @@
+import { csrfFetch } from "./csrf";
+
 const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 const LOAD_SPOT_DETAILS = 'spots/LOAD_SPOT_DETAILS';
 const LOAD_REVIEWS = 'spots/LOAD_REVIEWS';
+const CREATE_SPOT = 'spots/CREATE_SPOT'
 
 
 
@@ -19,23 +22,10 @@ export const loadReviews = (reviews) => ({
     reviews
 })
 
-
-// export const fetchSpots = () => async (dispatch) => {
-//     const response = await fetch('/api/spots');
-//     if (response.ok) {
-//         // const spots = await response.json();
-//         // dispatch(loadSpots(spots));
-//         const data = await response.json();
-//         if (Array.isArray(data.Spots)) {  
-//             dispatch(loadSpots(data.Spots));
-//           } else {
-//             console.error("response is not an array", data);
-//           }
-//         // return spots;
-//     }   else {
-//         console.error('Failed to fetch spots');
-//     }
-// };
+export const createSpot = (newSpot) => ({
+    type: CREATE_SPOT,
+    newSpot
+})
 
 export const fetchSpots = () => async (dispatch) => {
     const response = await fetch('/api/spots');
@@ -76,6 +66,21 @@ export const fetchReviews = (spotId) => async (dispatch) => {
     }
 }
 
+export const createSpotThunk = (newSpotData) => async (dispatch) => {
+    const response = csrfFetch('/api/spots', {
+        method: 'POST',
+        body: JSON.stringify(newSpotData),
+    });
+
+    const newSpot = await response.json();
+
+    if (response.ok) {
+        dispatch(createSpot(newSpot));
+    } else {
+        return newSpot;
+    }
+}
+
 const initialState = { 
     allSpots: {}, 
     spotDetails: null, 
@@ -89,7 +94,9 @@ const spotsReducer = (state = initialState, action) => {
     case LOAD_SPOT_DETAILS: 
       return { ...state, spotDetails: action.spot };
     case LOAD_REVIEWS: 
-      return { ...state, reviews: action.reviews }
+      return { ...state, reviews: action.reviews };
+    case CREATE_SPOT: 
+      return { ...state, allSpots: { ...state.allSpots, [action.newSpot.id]: action.newSpot, } } 
     default:
       return state;
   }

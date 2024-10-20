@@ -1,0 +1,103 @@
+/* General form styles */
+.create-spot-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+}
+
+/* Form headings */
+.create-spot-form h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.create-spot-form h3 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Section paragraph text */
+.create-spot-form p {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Input and textarea styles */
+.create-spot-form input,
+.create-spot-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+/* Textarea-specific styles */
+.create-spot-form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Error message styles */
+.error {
+    color: red;
+    font-size: 0.85em;
+    margin-top: -5px;
+}
+
+/* Latitude/Longitude, City/State row styles */
+.create-spot-form label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.create-spot-form .location-fields {
+    display: flex;
+    justify-content: space-between;
+}
+
+.create-spot-form .location-fields input {
+    width: 48%; /* Adjusts for both city/state and lat/long inputs */
+}
+
+/* Horizontal line styles */
+.create-spot-form hr {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 20px 0;
+}
+
+/* Image URL section */
+.create-spot-form .image-inputs input {
+    margin-bottom: 10px;
+}
+
+/* Submit button styles */
+.create-spot-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    background-color: #ff5a5f;
+    color: white;
+    font-size: 1.1em;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.create-spot-form button[type="submit"]:hover {
+    background-color: #ff787d;
+}

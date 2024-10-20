@@ -356,7 +356,7 @@ router.get('/:spotId', async (req, res) => {
 
 });
 
-router.post('/', restoreUser, requireAuth, async (req, res) => {
+router.post('/', restoreUser, requireAuth, async (req, res, next) => {
 
         // console.log('Received Cookies:', req.cookies);
 
@@ -379,6 +379,7 @@ router.post('/', restoreUser, requireAuth, async (req, res) => {
             return res.status(400).json({ message, errors: validationErrors });
         }
 
+    try {
         const newSpot = await Spot.create({
             ownerId: req.user.id,
             address, 
@@ -390,13 +391,17 @@ router.post('/', restoreUser, requireAuth, async (req, res) => {
             name, 
             description, 
             price,
-    }); 
+        }); 
 
-    res.status(201).json(newSpot); 
+        res.status(201).json(newSpot); 
+        
+    } catch (error) {
+        next(error);
+    }
 
 })   
 
-router.post('/:spotId/images', restoreUser, requireAuth, async (req, res) => { 
+router.post('/:spotId/images', restoreUser, requireAuth, async (req, res, next) => { 
     const { url, preview, spotId } = req.body;
 
     const spotById = await Spot.findByPk(req.params.spotId); 
@@ -411,22 +416,27 @@ router.post('/:spotId/images', restoreUser, requireAuth, async (req, res) => {
         })
     }
 
-    const newImage = await SpotImage.create({
-        url: req.body.url,
-        preview: req.body.preview,
-        spotId: spotById.id,
-    }); 
-
-    const returnInfo = {
-        id: newImage.id,
-        url: newImage.url,
-        preview: newImage.preview,
-    }
+    try {
+        const newImage = await SpotImage.create({
+            url: req.body.url,
+            preview: req.body.preview,
+            spotId: spotById.id,
+        }); 
     
-    res.status(201).json(returnInfo);
+        const returnInfo = {
+            id: newImage.id,
+            url: newImage.url,
+            preview: newImage.preview,
+        }
+        
+        res.status(201).json(returnInfo);
+        
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.put('/:spotId', restoreUser, requireAuth, async (req, res) => {
+router.put('/:spotId', restoreUser, requireAuth, async (req, res, next) => {
 
         const { address, city, state, country, lat, lng, name, description, price } = req.body; 
         
@@ -459,20 +469,24 @@ router.put('/:spotId', restoreUser, requireAuth, async (req, res) => {
             })
         }
 
-        spotById = await spotById.update({
-        address: req.body.address,
-        city: req.body.city, 
-        state: req.body.state, 
-        country: req.body.country, 
-        lat: req.body.lat, 
-        lng: req.body.lng, 
-        name: req.body.name, 
-        description: req.body.description, 
-        price: req.body.price, 
-    }); 
-
-    res.status(200).json(spotById); 
+        try {
+            spotById = await spotById.update({
+            address: req.body.address,
+            city: req.body.city, 
+            state: req.body.state, 
+            country: req.body.country, 
+            lat: req.body.lat, 
+            lng: req.body.lng, 
+            name: req.body.name, 
+            description: req.body.description, 
+            price: req.body.price, 
+            }); 
     
+            res.status(200).json(spotById); 
+            
+        } catch (error) {
+            next(error);
+        }
 }) 
 
 router.delete('/:spotId', restoreUser, requireAuth, async (req, res) => { 
@@ -533,7 +547,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     }
 });
 
-router.post('/:spotId/reviews', restoreUser, requireAuth, async (req, res) => {
+router.post('/:spotId/reviews', restoreUser, requireAuth, async (req, res, next) => {
         const { review, stars } = req.body;
         const { spotId } = req.params;
 
@@ -570,14 +584,19 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, async (req, res) => {
             })
         } 
 
-        const newReview = await Review.create({
-            userId: req.user.id,
-            spotId,
-            review,
-            stars,
-        });
-
-        res.status(201).json(newReview);
+        try {
+            const newReview = await Review.create({
+                userId: req.user.id,
+                spotId,
+                review,
+                stars,
+            });
+    
+            res.status(201).json(newReview);
+            
+        } catch (error) {
+            next(error);
+        }
 });
 
 router.get('/:spotId/bookings', restoreUser, requireAuth, async (req,res) => {

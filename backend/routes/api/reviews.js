@@ -120,7 +120,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
     res.status(200).json({ Reviews: reviewsDeets });
 }); 
 
-router.post('/:reviewId/images', restoreUser, requireAuth, async (req, res) => {
+router.post('/:reviewId/images', restoreUser, requireAuth, async (req, res, next) => {
     const { url } = req.body;
     const { reviewId } = req.params;
 
@@ -139,21 +139,25 @@ router.post('/:reviewId/images', restoreUser, requireAuth, async (req, res) => {
     if (priorImages.length >= 10) {
         return res.status(403).json({ message: "Maximum number of images for this resource was reached" });
     }
-
-    const newImage = await ReviewImage.create({
-        reviewId,
-        url,
-    });
-
-    const returnImage = {
-        id: newImage.id,
-        url: newImage.url,
+    try {
+        const newImage = await ReviewImage.create({
+            reviewId,
+            url,
+        });
+    
+        const returnImage = {
+            id: newImage.id,
+            url: newImage.url,
+        }
+    
+        res.status(201).json(returnImage);
+        
+    } catch (error) {
+        next(error);
     }
-
-    res.status(201).json(returnImage);
 });
 
-router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => { 
+router.put('/:reviewId', restoreUser, requireAuth, async (req, res, next) => { 
 
         const { reviewId } = req.params;
         const { review, stars } = req.body;
@@ -182,13 +186,17 @@ router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
         if (reviewToUpdate.userId !== req.user.id) {
             return res.status(403).json({ message: "Review must belong to user" })
         }
-
-        reviewToUpdate.review = review;
-        reviewToUpdate.stars = stars;
-
-        await reviewToUpdate.save();
-
-        res.status(200).json(reviewToUpdate);
+        try {
+            reviewToUpdate.review = review;
+            reviewToUpdate.stars = stars;
+    
+            await reviewToUpdate.save();
+    
+            res.status(200).json(reviewToUpdate);
+            
+        } catch (error) {
+            next(error);
+        }
 });
 
 router.delete('/:reviewId', restoreUser, requireAuth, async (req, res) => {

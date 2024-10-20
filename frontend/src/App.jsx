@@ -8,6 +8,7 @@ import * as sessionActions from './store/session';
 import SpotsList from './components/SpotsList/SpotsList';
 // import * as spotsListActions from './store/spots'; 
 import SpotDetails from './components/SpotDetails/SpotDetails';
+import CreateSpotPage from './components/CreateSpotPage/CreateSpotPage';
 
 function Layout() {
   const dispatch = useDispatch();
