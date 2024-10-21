@@ -20,4 +20,11 @@ a {
     &:hover {
         filter: brightness(40%);
     }
-}
+} 
+
+.playwrite-us-modern-logo {
+    font-family: "Playwrite US Modern", cursive;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+  }

@@ -87,7 +87,7 @@ function SpotDetails() {
             <div className="reviews-section">
             <h2><RiStarSFill className="star-icon"/>{reviewSummary}</h2>
             {reviews.length > 0 ? (
-                <ul>
+                <ul className="review-bricks">
                 {reviews.map((review) => (
                     <li key={review.id} className="review-item">
                     <h3>{review.User.firstName}</h3>

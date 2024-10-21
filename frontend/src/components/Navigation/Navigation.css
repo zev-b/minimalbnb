@@ -43,7 +43,7 @@ li {
 .logo-image {
     width: 60px;
     height: 60px; 
-    border-radius: 50%; 
+    border-radius: 60%; 
     object-fit: cover; 
 }
 

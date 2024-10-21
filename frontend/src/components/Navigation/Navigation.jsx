@@ -12,8 +12,8 @@ function Navigation({ isLoaded }) {
     <ul className="navigation">
       <li className="navigation-item">
         <NavLink to="/">
-        <img className="logo-image" src="/Screenshot 2024-10-11 162225.png" alt="logo-image" />
-        <img className='logo-image2' src="https://i.ibb.co/Kr1TMX7/Screenshot-2024-10-14-224148.png" alt="website-name-minimalbnb" /></NavLink>
+        <img className="logo-image" src="/minimalbnb.svg" alt="logo-image" />
+        <span className='playwrite-us-modern-logo'>minimalbnb</span></NavLink>
       </li>
       {isLoaded && (
         <li className="navigation-item navigation-buttons">
