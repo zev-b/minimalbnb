@@ -2,7 +2,8 @@
 
 // import React from 'react';
 import { useModal } from '../../context/Modal';
-import './OpenModalMenuItem.css'
+// import './OpenModalMenuItem.css'; 
+import './Navigation.css';
 
 function OpenModalMenuItem({
   modalComponent, // component to render inside the modal

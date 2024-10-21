@@ -38,7 +38,7 @@ function SpotDetails() {
             <h1>{name}</h1>
             <p>{city}, {state}, {country}</p>
             
-            {/* Images Section */}
+            {/* images */}
             <div className="spot-images">
             <img className="large-image" src={SpotImages.find(img => img.preview)?.url || SpotImages[0].url} alt="Main spot" />
             <div className="small-images">
@@ -54,7 +54,7 @@ function SpotDetails() {
             <p>{description}</p>
             </div>
 
-            {/* Callout Box (price, rating, reserve Button) */}
+            {/* Callout Box */}
             <div className="callout-box">
             <div className="callout-header">
                 <span className="price">${price.toFixed(2)}</span> <span className="per-night">/ night</span>
@@ -63,7 +63,7 @@ function SpotDetails() {
             <button className="reserve-button" onClick={handleReserveClick}>Reserve</button>
             </div>
 
-            {/* Reviews Section */}
+            {/* Reviews */}
             <div className="reviews-section">
             <h2><RiStarSFill className="star-icon"/>{reviewSummary}</h2>
             {reviews.length > 0 ? (

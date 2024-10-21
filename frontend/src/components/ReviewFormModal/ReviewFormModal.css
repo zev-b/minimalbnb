@@ -1,0 +1,9 @@
+.star-icon {
+    font-size: 25px;
+    color: #ccc; /* Default star color */
+    cursor: pointer;
+  }
+  
+  .star-icon.filled {
+    color: #FFD700; /* Filled star color (gold) */
+  }
