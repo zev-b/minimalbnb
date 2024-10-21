@@ -14,7 +14,7 @@ function Navigation({ isLoaded }) {
         <NavLink to="/"><img className="logo-image" src="/Screenshot 2024-10-11 162225.png" alt="" />Replace with minimalbnb image</NavLink>
       </li>
       {isLoaded && (
-        <li>
+        <li className="nav-buttons">
             {!!sessionUser && (<Link to='/spots/new' className="create-spot-button">Create a New Spot</Link>)}
           <ProfileButton user={sessionUser} />
         </li>

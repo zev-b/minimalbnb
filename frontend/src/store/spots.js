@@ -3,7 +3,8 @@ import { csrfFetch } from "./csrf";
 const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 const LOAD_SPOT_DETAILS = 'spots/LOAD_SPOT_DETAILS';
 const LOAD_REVIEWS = 'spots/LOAD_REVIEWS';
-const CREATE_SPOT = 'spots/CREATE_SPOT'
+const CREATE_SPOT = 'spots/CREATE_SPOT';
+const CREATE_SPOT_IMAGE = 'spots/CREATE_SPOT_IMAGES'
 
 
 
@@ -25,6 +26,11 @@ export const loadReviews = (reviews) => ({
 export const createSpot = (newSpot) => ({
     type: CREATE_SPOT,
     newSpot
+})
+
+export const createSpotImage = (image) => ({
+    type: CREATE_SPOT_IMAGE,
+    image
 })
 
 export const fetchSpots = () => async (dispatch) => {
@@ -67,7 +73,7 @@ export const fetchReviews = (spotId) => async (dispatch) => {
 }
 
 export const createSpotThunk = (newSpotData) => async (dispatch) => {
-    const response = csrfFetch('/api/spots', {
+    const response = await csrfFetch('/api/spots', {
         method: 'POST',
         body: JSON.stringify(newSpotData),
     });
@@ -76,15 +82,38 @@ export const createSpotThunk = (newSpotData) => async (dispatch) => {
 
     if (response.ok) {
         dispatch(createSpot(newSpot));
-    } else {
-        return newSpot;
     }
+        return newSpot;
+}
+
+export const createSpotImagesThunk = (images, spotId) => async (dispatch) => {
+    const retObj = { images: [], errors: [] };
+
+    for (let i = 0; i < images.length; i++) {
+        // console.log(images[i]);
+        const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+            method: 'POST',
+            body: JSON.stringify(images[i]),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          retObj.images[i] = data;
+        } else {
+          retObj.errors[i] = data;
+        }
+
+        dispatch(createSpotImage(data))
+    }
+
+    return retObj;
 }
 
 const initialState = { 
     allSpots: {}, 
     spotDetails: null, 
     reviews: [],
+    spotImages: [],
 };
 
 const spotsReducer = (state = initialState, action) => {
@@ -96,7 +125,22 @@ const spotsReducer = (state = initialState, action) => {
     case LOAD_REVIEWS: 
       return { ...state, reviews: action.reviews };
     case CREATE_SPOT: 
-      return { ...state, allSpots: { ...state.allSpots, [action.newSpot.id]: action.newSpot, } } 
+      return { ...state, allSpots: { ...state.allSpots, [action.newSpot.id]: action.newSpot, } };
+    case CREATE_SPOT_IMAGE:
+     return {
+        ...state,
+        allSpots: {
+        ...state.allSpots,
+        [action.image.spotId]: {
+            ...action.image.spotId,
+            SpotImages: [
+            ...(state[action.image.spotId]?.SpotImages ?? []),
+            action.image,
+            ],
+        },
+        },
+    };
+    
     default:
       return state;
   }

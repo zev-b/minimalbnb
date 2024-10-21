@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createSpotThunk } from '../../store/spots';
+import { createSpotImagesThunk, createSpotThunk } from '../../store/spots';
 import { useDispatch, useSelector } from "react-redux";
 import './CreateSpotPage.css'
 
@@ -41,7 +41,6 @@ function CreateSpotPage() {
         if (!price) validations.price = "Price is required";
         if (price < 1) validations.price = 'Price per day must be a positive number';
         if (!previewImageUrl) validations.previewImageUrl = "Preview image is required";
-        // if (!) errors. = ;
 
         const validUrl = /\.(?:png|jpg|jpeg)$/i;
         if (!validUrl.test(previewImageUrl)) {
@@ -59,14 +58,16 @@ function CreateSpotPage() {
         const newSpot = {
             ownerId: userId,
             country,
-            streetAddress,
+            address: streetAddress,
             city,
             state,
             description,
             name,
             price,
+            lng: longitude,
+            lat: latitude,
             previewImageUrl,
-            imageUrls,
+            // imageUrls,
         };
 
         const createdSpot = await dispatch(createSpotThunk(newSpot)); 
@@ -75,7 +76,17 @@ function CreateSpotPage() {
             return;
         }
         
-        // navigate(`/spots/${createdSpot.id}`);
+        const imagesToSend = [{ url: previewImageUrl, preview: true }];
+
+        imageUrls.forEach((url) => {
+          if (url) {
+            imagesToSend.push({ url, preview: false });
+          }
+        });
+        
+        dispatch(createSpotImagesThunk(imagesToSend, createdSpot.id));
+
+        navigate(`/spots/${createdSpot.id}`);
     };
 
 
@@ -222,7 +233,7 @@ function CreateSpotPage() {
                         <input
                             type="text"
                             placeholder={`Image URL`}
-                            value={url}
+                            value={imageUrls[idx]}
                             onChange={(e) => {
                                 const newImageUrls = [...imageUrls];
                                 newImageUrls[idx] = e.target.value;

@@ -44,7 +44,7 @@ function SpotsList() {
                                      {spot.avgRating > 0 ? spot.avgRating.toFixed(2) : 'New'}
                              </div>
                          </div>
-                         <div>${spot.price.toFixed(2)} / night</div>
+                         <div>${parseFloat(spot.price).toFixed(2)} / night</div>
                     </div>
                 </div>
             ))}
