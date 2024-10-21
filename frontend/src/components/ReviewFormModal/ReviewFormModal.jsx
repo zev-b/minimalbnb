@@ -50,13 +50,7 @@ const ReviewFormModal = ({ spotId }) => {
   
         {errors.stars && <p className="error">{errors.stars}</p>}
         <label>Stars</label>
-        {/* <input
-          type="number"
-          min="1"
-          max="5"
-          value={stars}
-          onChange={(e) => setStars(e.target.value)}
-        /> */}
+     
         <div className="star-rating">
         {[1, 2, 3, 4, 5].map((star) => (
             <label key={star}>
@@ -66,13 +60,13 @@ const ReviewFormModal = ({ spotId }) => {
                 value={star}
                 checked={stars === star}
                 onChange={() => {}}
-                onClick={() => setStars(star)} // Handle clicking to set the star rating
-                style={{ display: 'none' }} // Hide the actual radio buttons
+                onClick={() => setStars(star)} 
+                style={{ display: 'none' }} 
             />
             <FaRegStar
-                className={`star-icon ${star <= (hover || stars) ? 'filled' : ''}`} // Apply filled class when needed
-                onMouseEnter={() => setHover(star)} // Handle hover
-                onMouseLeave={() => setHover(0)} // Remove hover
+                className={`star-icon2 ${star <= (hover || stars) ? 'filled' : ''}`} 
+                onMouseEnter={() => setHover(star)} 
+                onMouseLeave={() => setHover(0)} 
             />
             </label>
         ))}
