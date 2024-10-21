@@ -11,7 +11,7 @@ function Navigation({ isLoaded }) {
   return (
     <ul>
       <li>
-        <NavLink to="/"><img className="logo-image" src="/Screenshot 2024-10-11 162225.png" alt="" />Replace with minimalbnb image</NavLink>
+        <NavLink to="/"><img className="logo-image" src="/Screenshot 2024-10-11 162225.png" alt="logo-image" />Replace with minimalbnb image</NavLink>
       </li>
       {isLoaded && (
         <li className="nav-buttons">

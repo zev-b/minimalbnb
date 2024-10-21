@@ -4,7 +4,8 @@ const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 const LOAD_SPOT_DETAILS = 'spots/LOAD_SPOT_DETAILS';
 const LOAD_REVIEWS = 'spots/LOAD_REVIEWS';
 const CREATE_SPOT = 'spots/CREATE_SPOT';
-const CREATE_SPOT_IMAGE = 'spots/CREATE_SPOT_IMAGES'
+const CREATE_SPOT_IMAGE = 'spots/CREATE_SPOT_IMAGES';
+const CREATE_REVIEW = 'spots/CREATE_REVIEW';
 
 
 
@@ -33,14 +34,19 @@ export const createSpotImage = (image) => ({
     image
 })
 
+export const createReview = (review) => ({
+    type: CREATE_REVIEW,
+    review
+});
+
 export const fetchSpots = () => async (dispatch) => {
     const response = await fetch('/api/spots');
     if (response.ok) {
         const data = await response.json();
         if (Array.isArray(data.Spots)) {
-            // Convert the array of spots into an object using spot IDs as keys
+            
             const spotsObject = data.Spots.reduce((acc, spot) => {
-                acc[spot.id] = spot; // Use the spot's ID as the key
+                acc[spot.id] = spot; 
                 return acc;
             }, {});
             dispatch(loadSpots(spotsObject));
@@ -107,7 +113,23 @@ export const createSpotImagesThunk = (images, spotId) => async (dispatch) => {
     }
 
     return retObj;
-}
+};
+
+export const createReviewThunk = (spotId, reviewData) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+        method: 'POST',
+        body: JSON.stringify(reviewData),
+    });
+
+    if (response.ok) {
+        const newReview = await response.json();
+        dispatch(createReview(newReview));
+        return newReview;
+    } else {
+        const errors = await response.json();
+        return errors;
+    }
+};
 
 const initialState = { 
     allSpots: {}, 
