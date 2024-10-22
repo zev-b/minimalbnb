@@ -26,7 +26,9 @@ function CreateSpotPage({ manage }) {
     const [errors, setErrors] = useState({ imageUrls: [] });
 
     useEffect(() => {
-        dispatch(fetchSpotDetails(spotId));            
+        if (spotId) {
+            dispatch(fetchSpotDetails(spotId));            
+        }
     }, [dispatch, spotId]);
 
     useEffect(() => {
