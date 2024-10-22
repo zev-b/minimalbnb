@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { fetchUserSpotsThunk } from '../../store/spots';
 import './ManageSpots.css';
 import { RiStarSFill } from "react-icons/ri";
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import DelSpotModal from '../DelSpotModal/DelSpotModal';
 
 
 function ManageSpots() {
@@ -46,7 +48,7 @@ function ManageSpots() {
                 <p>${parseFloat(spot.price).toFixed(2)} / night</p>
                 <div className="spot-rating"><RiStarSFill className="star-icon"/> {spot.avgRating > 0 ? spot.avgRating.toFixed(2) : 'New'}</div>
                 <button className="update-spot-button" onClick={(e) => { e.stopPropagation(); handleUpdateSpot(spot.id); }}>Update</button>
-                <button className="delete-spot-button" onClick={(e) => { e.stopPropagation(); handleDeleteSpot(spot.id); }}>Delete</button>
+                <OpenModalButton buttonText="Delete" className="delete-spot-button" modalComponent={<DelSpotModal spotId={spot.id}/>}/>
               </div>
             </div>
           ))}

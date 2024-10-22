@@ -219,12 +219,12 @@ const spotsReducer = (state = initialState, action) => {
             numReviews: (state.spotDetails?.numReviews ?? 0) + 1,
             avgRating: 
             state.reviews.reduce((sum, review) => {
-                console.log('\n === Way Too much Info ====\n', 'sum=', sum, 'review=', review, 'action=',action.review)
+                // console.log('\n === Way Too much Info ====\n', 'sum=', sum, 'review=', review, 'action=',action.review)
                 if (review.spotId == action.review.spotId) {
-                 console.log("==== Got inside the vault! =====", sum + review.stars)
+                //  console.log("==== Got inside the vault! =====", sum + review.stars)
                     return sum + review.stars;
                 }
-                console.log("\n === Wrong Map! ===\n", 'id', review.id)
+                // console.log("\n === Wrong Map! ===\n", 'id', review.id)
                 return sum;
             }, action.review.stars) / (state.spotDetails.numReviews + 1) 
             ,
