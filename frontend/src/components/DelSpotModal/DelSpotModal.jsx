@@ -23,6 +23,7 @@ const DelSpotModal = ({ spotId }) => {
         <div className="delete-modal">
       <div className="modal-content">
         <h2>Confirm Delete</h2>
+        {error && (<p>{error}</p>)}
         <p>Are you sure you want to remove this spot from the listings?</p>
         <div className="modal-buttons">
           <button className="delete-button-yes" onClick={handleDelete}>

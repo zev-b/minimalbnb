@@ -295,7 +295,7 @@ const spotsReducer = (state = initialState, action) => {
             state.reviews.reduce((sum, review) => {
                 // console.log('\n === Way Too much Info ====\n', 'sum=', sum, 'review=', review, 'action=',action.review)
                 if (review.spotId == state.reviews.find(review => review.id === action.reviewId).spotId) {
-                     console.log("==== Got inside the vault! =====", sum + review.stars)
+                    //  console.log("==== Got inside the vault! =====", sum + review.stars)
                     return sum + review.stars;
                 }
                 // console.log("\n === Wrong Map! ===\n", 'id', review.id)

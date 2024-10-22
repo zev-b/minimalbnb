@@ -27,6 +27,7 @@ const DelReviewModal = ({ reviewId }) => {
         <div className="delete-modal">
       <div className="modal-content">
         <h2>Confirm Delete</h2>
+        {error && (<p>{error}</p>)}
         <p>Are you sure you want to delete this review?</p>
         <div className="modal-buttons">
           <button className="delete-button-yes" onClick={handleDelete}>
