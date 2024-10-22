@@ -79,7 +79,7 @@ module.exports = {
     //   username: { [Op.in]: ['Demo-lition', 'LarryTest', 'FrankTest'] }
     // }, {});
     for (const user of seedData) {
-      await User.destory({ where: user });
+      await User.destroy({ where: user });
     }
   }
 };
