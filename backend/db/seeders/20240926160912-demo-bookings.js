@@ -36,7 +36,7 @@ const seedData = [
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await Booking.bulkCreate(seedData, {validate: true})
+    await Booking.bulkCreate(seedData)
   },
 
   async down (queryInterface, Sequelize) {
