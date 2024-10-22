@@ -48,14 +48,21 @@ function SpotDetails() {
     
     useEffect(() => {
         if (spot) {
+            console.log("\n == avgRating ==\n", spot.avgRating);
             setIsOwner(sessionUser?.id === spot.Owner?.id);
-            setHasPostedReview(reviews.some(review => review.userId === sessionUser?.id));
+            setHasPostedReview(reviews.some(review => review.spotId == spot.id && review.userId === sessionUser?.id));
             setRatingDisplay(spot.avgRating ? `${spot.avgRating.toFixed(2)}` : 'New');
             setReviewSummary(spot.numReviews > 0
-                ? `${ratingDisplay} · ${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`
-                : ratingDisplay)
+                ? ` · ${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`
+                : "")
         }
     }, [reviews, sessionUser, spot])
+
+    // useEffect(() => {
+    //     if (spot) {
+    //         setHasPostedReview(reviews.some(review => review.spotId === spot.id && review.userId === sessionUser?.id));
+    //     }
+    // }, [reviews])
 
     
     // if (!spot) return <p>En route...</p>
@@ -114,7 +121,7 @@ function SpotDetails() {
 
                 <span className="price">${spot.price.toFixed(2)}</span> <span className="per-night">/ night</span>
                 </div>
-            <span className="rating-summary"><RiStarSFill className="first-star-icon"/> {reviewSummary}
+            <span className="rating-summary"><RiStarSFill className="first-star-icon"/> {ratingDisplay}{reviewSummary}
             </span>
             </div>
             <button className="reserve-button" onClick={handleReserveClick}>Reserve</button>
@@ -125,16 +132,16 @@ function SpotDetails() {
 
             {/* Reviews */}
             <div className="reviews-section">
-            <h2><RiStarSFill className="star-icon"/>{reviewSummary}</h2>
+            <h2><RiStarSFill className="star-icon"/>{ratingDisplay}{reviewSummary}</h2>
                 {/* Post Review Button */}
-            {sessionUser && !isOwner && !hasPostedReview && (
+            {(sessionUser && !isOwner && !hasPostedReview) && (
                 <button className="post-review-button" onClick={handlePostReviewClick}>
                     Post Your Review
                 </button>
             )}
-            {reviews.length > 0 ? (
+            {reviews.filter((review) => review.spotId == spot.id).length > 0 ? (
                 <ul className="review-bricks">
-                {reviews.map((review) => review.spotId === spot.id && (
+                {[...reviews].reverse().map((review) => review.spotId == spot.id && (
                     <li key={review.id} className="review-item">
                     <h3>{review.User.firstName}</h3>
                     <p>{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>

@@ -41,6 +41,7 @@ const ReviewFormModal = ({ spotId }) => {
     return (
       <div className="review-form-modal">
         <h2>How was your stay?</h2>
+        {errors.server && <p className="error">{errors.server}</p>}
         {errors.review && <p className="error">{errors.review}</p>}
         <textarea
           placeholder="Leave your review here..."

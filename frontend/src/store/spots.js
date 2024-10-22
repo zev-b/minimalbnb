@@ -93,7 +93,7 @@ export const fetchSpotDetails = (spotId) => async (dispatch) => {
 }
 
 export const fetchReviews = (spotId) => async (dispatch) => {
-    console.log('\n= spotId in thunk =\n', spotId)
+    // console.log('\n= spotId in thunk =\n', spotId)
     const response = await fetch(`/api/spots/${spotId}/reviews`);
     if (response.ok) {
         const reviews = await response.json();
@@ -215,13 +215,19 @@ const spotsReducer = (state = initialState, action) => {
         return {
         ...state,
         spotDetails: {
+            ...state.spotDetails,
             numReviews: (state.spotDetails?.numReviews ?? 0) + 1,
-            avgRating: (
+            avgRating: 
             state.reviews.reduce((sum, review) => {
-                if (review.spotId === action.review.spotId) return sum + review.stars;
+                console.log('\n === Way Too much Info ====\n', 'sum=', sum, 'review=', review, 'action=',action.review)
+                if (review.spotId == action.review.spotId) {
+                 console.log("==== Got inside the vault! =====", sum + review.stars)
+                    return sum + review.stars;
+                }
+                console.log("\n === Wrong Map! ===\n", 'id', review.id)
                 return sum;
-            }, 0) / state.spotDetails.numReviews
-            ),
+            }, action.review.stars) / (state.spotDetails.numReviews + 1) 
+            ,
         },
         reviews: [...state.reviews, action.review]
         }
