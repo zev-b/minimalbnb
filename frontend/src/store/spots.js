@@ -8,6 +8,7 @@ const CREATE_SPOT_IMAGE = 'spots/CREATE_SPOT_IMAGES';
 const CREATE_REVIEW = 'spots/CREATE_REVIEW';
 const LOAD_USER_SPOTS = 'spots/LOAD_USER_SPOTS';
 const DEL_SPOT = 'spots/DEL_SPOT';
+const DEL_REVIEW = 'spots/DEL_REVIEW';
 
 
 
@@ -56,6 +57,11 @@ export const loadUserSpots = (spots) => ({
 export const deleteSpot = (spotId) => ({
     type: DEL_SPOT,
     spotId
+})
+
+export const deleteReview = (reviewId) => ({
+    type: DEL_REVIEW,
+    reviewId
 })
 
 // export const fetchSpots = () => async (dispatch) => {
@@ -174,7 +180,7 @@ export const fetchUserSpotsThunk = () => async (dispatch) => {
 
 export const deleteSpotThunk = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
     })
     if (response.ok) {
         dispatch(deleteSpot(spotId));
@@ -182,6 +188,17 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
         return response.json();
     }
 };
+
+export const deleteReviewThunk = (reviewId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: 'DELETE',
+    })
+    if (response.ok) {
+        dispatch(deleteReview(reviewId));
+    } else {
+        return response.json();
+    }
+}
 
 const initialState = { 
     allSpots: {}, 
@@ -246,6 +263,26 @@ const spotsReducer = (state = initialState, action) => {
         ...state,
         allSpots: Object.fromEntries(Object.entries(state.allSpots).filter(([ id ]) => id != action.spotId))
     }
+    case DEL_REVIEW: 
+      return {
+        ...state,
+        reviews: state.reviews.filter((review) => review.id !== action.reviewId),
+        spotDetails: {
+            ...state.spotDetails,
+            numReviews: (state.spotDetails?.numReviews ?? 1) - 1,
+            avgRating: 
+            state.reviews.reduce((sum, review) => {
+                // console.log('\n === Way Too much Info ====\n', 'sum=', sum, 'review=', review, 'action=',action.review)
+                if (review.spotId == action.reviewId.spotId) {
+                //  console.log("==== Got inside the vault! =====", sum + review.stars)
+                    return sum + review.stars;
+                }
+                // console.log("\n === Wrong Map! ===\n", 'id', review.id)
+                return sum;
+            }, 0) / ((state.spotDetails.numReviews - 1) || 1) 
+            ,
+        },
+      }
     default:
       return state;
   }

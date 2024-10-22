@@ -6,6 +6,8 @@ import './SpotDetails.css';
 import { RiStarSFill } from "react-icons/ri";
 import { useModal } from "../../context/Modal"; 
 import ReviewFormModal from "../ReviewFormModal/ReviewFormModal";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import DelReviewModal from "../DelReviewModal/DelReviewModal";
 
 
 function SpotDetails() {
@@ -48,7 +50,7 @@ function SpotDetails() {
     
     useEffect(() => {
         if (spot) {
-            console.log("\n == avgRating ==\n", spot.avgRating);
+            // console.log("\n == avgRating ==\n", spot.avgRating);
             setIsOwner(sessionUser?.id === spot.Owner?.id);
             setHasPostedReview(reviews.some(review => review.spotId == spot.id && review.userId === sessionUser?.id));
             setRatingDisplay(spot.avgRating ? `${spot.avgRating.toFixed(2)}` : 'New');
@@ -146,6 +148,9 @@ function SpotDetails() {
                     <h3>{review.User.firstName}</h3>
                     <p>{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
                     <p>{review.review}</p>
+                    {sessionUser.id === review.userId && (
+                        <OpenModalButton buttonText="Delete" className="del-review" modalComponent={<DelReviewModal reviewId={review.id}/>}/>
+                        )}
                     </li>
                 ))}
                 </ul>
