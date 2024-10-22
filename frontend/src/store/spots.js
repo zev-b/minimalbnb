@@ -284,25 +284,26 @@ const spotsReducer = (state = initialState, action) => {
         ...state,
         allSpots: Object.fromEntries(Object.entries(state.allSpots).filter(([ id ]) => id != action.spotId))
     }
+    //^ ========= Priority 1 Level for refactoring ==============
     case DEL_REVIEW: 
       return {
         ...state,
-        reviews: state.reviews.filter((review) => review.id !== action.reviewId),
         spotDetails: {
             ...state.spotDetails,
             numReviews: (state.spotDetails?.numReviews ?? 1) - 1,
             avgRating: 
             state.reviews.reduce((sum, review) => {
                 // console.log('\n === Way Too much Info ====\n', 'sum=', sum, 'review=', review, 'action=',action.review)
-                if (review.spotId == action.reviewId.spotId) {
-                //  console.log("==== Got inside the vault! =====", sum + review.stars)
+                if (review.spotId == state.reviews.find(review => review.id === action.reviewId).spotId) {
+                     console.log("==== Got inside the vault! =====", sum + review.stars)
                     return sum + review.stars;
                 }
                 // console.log("\n === Wrong Map! ===\n", 'id', review.id)
                 return sum;
-            }, 0) / ((state.spotDetails.numReviews - 1) || 1) 
+            }, 0 - state.reviews.find(review => review.id === action.reviewId).stars) / ((state.spotDetails.numReviews - 1) || 1)
             ,
         },
+        reviews: state.reviews.filter((review) => review.id !== action.reviewId),
       } 
     default:
       return state;

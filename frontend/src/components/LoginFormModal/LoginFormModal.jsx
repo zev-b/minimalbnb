@@ -1,6 +1,6 @@
 // frontend/src/components/LoginFormModal/LoginFormModal.jsx
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
@@ -11,6 +11,7 @@ function LoginFormModal() {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
@@ -25,6 +26,10 @@ function LoginFormModal() {
         }
       });
   };
+
+  useEffect(() => {
+    setButtonDisabled(credential.length < 4 || password.length < 6)
+  }, [credential, password])
 
   const handleDemoLogin = () => {
     return dispatch(sessionActions.login({ credential: "Demo-lition", password: "demolizer" }))
@@ -62,10 +67,19 @@ function LoginFormModal() {
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
-        <button type="submit">Log In</button>
+        <button 
+        type="submit"
+        disabled={buttonDisabled}
+        >
+          Log In
+        </button>
       </form>
 
-      <button onClick={handleDemoLogin} className="demo-login-button" style={{margin: '0 auto'}}>
+      <button 
+      onClick={handleDemoLogin} 
+      className="demo-login-button" 
+      style={{margin: '0 auto'}}
+      >
         Log in as Demo User
       </button>
     </>

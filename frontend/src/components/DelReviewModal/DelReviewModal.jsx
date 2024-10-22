@@ -30,10 +30,10 @@ const DelReviewModal = ({ reviewId }) => {
         <p>Are you sure you want to delete this review?</p>
         <div className="modal-buttons">
           <button className="delete-button-yes" onClick={handleDelete}>
-            Yes (Delete Spot)
+            Yes (Delete Review)
           </button>
           <button className="cancel-button" onClick={closeModal}>
-            No (Keep Spot)
+            No (Keep Review)
           </button>
         </div>
       </div>

@@ -148,7 +148,7 @@ function SpotDetails() {
                     <h3>{review.User.firstName}</h3>
                     <p>{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
                     <p>{review.review}</p>
-                    {sessionUser.id === review.userId && (
+                    {sessionUser?.id === review.userId && (
                         <OpenModalButton buttonText="Delete" className="del-review" modalComponent={<DelReviewModal reviewId={review.id}/>}/>
                         )}
                     </li>

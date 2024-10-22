@@ -2,6 +2,10 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+
+    >h1:first-of-type {
+      text-align: left;
+    }
   }
   
   .spot-images {

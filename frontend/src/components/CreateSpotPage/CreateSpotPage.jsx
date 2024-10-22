@@ -95,6 +95,10 @@ function CreateSpotPage({ manage }) {
 
         setErrors(validations);
 
+        if (Object.entries(validations).length !== 1 || validations.imageUrls.length !== 0) {
+            return;
+        }
+
         const newSpot = {
             ownerId: userId,
             country,
@@ -146,7 +150,7 @@ function CreateSpotPage({ manage }) {
 
     return (
         <form className="create-spot-form" onSubmit={handleSubmit}>
-            <h1>{spotId ? 'Update Your' : 'Create a New'} Spot</h1>
+            <h1>{spotId ? 'Update your' : 'Create a New'} Spot</h1>
 
              {/* Location Section */}
              <section>
@@ -296,7 +300,7 @@ function CreateSpotPage({ manage }) {
                                 setImageUrls(newImageUrls);
                             }}
                         />
-                        {errors.imageUrls[idx] && <p className="error">{errors.imageUrls[idx]}</p>}
+                        {errors.imageUrls?.[idx] && <p className="error">{errors.imageUrls[idx]}</p>}
                     </div>
                 ))}
             </section>
@@ -307,7 +311,7 @@ function CreateSpotPage({ manage }) {
             }
 
             {/* Submit Button */}
-            <button type="submit">{spotId ? 'Update' : 'Create'} Spot</button>
+            <button type="submit">{spotId ? 'Update your' : 'Create'} Spot</button>
         </form>
     )
 }
