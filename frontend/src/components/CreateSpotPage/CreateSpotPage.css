@@ -1,4 +1,3 @@
-/* General form styles */
 .create-spot-form {
     max-width: 600px;
     margin: 0 auto;
@@ -9,7 +8,6 @@
     background-color: #fff;
 }
 
-/* Form headings */
 .create-spot-form h1 {
     text-align: center;
     font-size: 2em;
@@ -24,14 +22,12 @@
     color: #333;
 }
 
-/* Section paragraph text */
 .create-spot-form p {
     font-size: 0.9em;
     color: #555;
     margin-bottom: 10px;
 }
 
-/* Input and textarea styles */
 .create-spot-form input,
 .create-spot-form textarea {
     width: 100%;
@@ -43,20 +39,17 @@
     font-size: 1em;
 }
 
-/* Textarea-specific styles */
 .create-spot-form textarea {
     height: 100px;
     resize: vertical;
 }
 
-/* Error message styles */
 .error {
     color: red;
     font-size: 0.85em;
     margin-top: -5px;
 }
 
-/* Latitude/Longitude, City/State row styles */
 .create-spot-form label {
     display: flex;
     justify-content: space-between;
@@ -69,22 +62,19 @@
 }
 
 .create-spot-form .location-fields input {
-    width: 48%; /* Adjusts for both city/state and lat/long inputs */
+    width: 48%; 
 }
 
-/* Horizontal line styles */
 .create-spot-form hr {
     border: none;
     border-top: 1px solid #333;
     margin: 20px 0;
 }
 
-/* Image URL section */
 .create-spot-form .image-inputs input {
     margin-bottom: 10px;
 }
 
-/* Submit button styles */
 .create-spot-form button[type="submit"] {
     display: block;
     width: 100%;

@@ -27,7 +27,7 @@ function CreateSpotPage({ manage }) {
 
     useEffect(() => {
         dispatch(fetchSpotDetails(spotId));            
-    }, [dispatch]);
+    }, [dispatch, spotId]);
 
     useEffect(() => {
         if (spotId) {

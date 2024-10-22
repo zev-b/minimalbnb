@@ -21,6 +21,6 @@
   #modal-content {
     position: absolute;
     background-color: white;
-    max-height: 90vh; /* Adjust the height as needed */ /*added*/
+    max-height: 90vh;
     overflow-y: auto; /*added*/
   }
