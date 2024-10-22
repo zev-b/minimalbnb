@@ -9,6 +9,7 @@ const CREATE_REVIEW = 'spots/CREATE_REVIEW';
 const LOAD_USER_SPOTS = 'spots/LOAD_USER_SPOTS';
 const DEL_SPOT = 'spots/DEL_SPOT';
 const DEL_REVIEW = 'spots/DEL_REVIEW';
+const UPDATE_SPOT = 'spots/UPDATE_SPOT';
 
 
 
@@ -34,9 +35,9 @@ export const loadReviews = (reviews) => ({
       reviews
   })
   
-export const createSpot = (newSpot) => ({
+export const createSpot = (spot) => ({
       type: CREATE_SPOT,
-      newSpot
+      spot
   })
   
 export const createSpotImage = (image) => ({
@@ -62,6 +63,11 @@ export const deleteSpot = (spotId) => ({
 export const deleteReview = (reviewId) => ({
     type: DEL_REVIEW,
     reviewId
+});
+
+export const updateSpot = (spot) => ({
+    type: UPDATE_SPOT,
+    spot
 })
 
 // export const fetchSpots = () => async (dispatch) => {
@@ -198,6 +204,20 @@ export const deleteReviewThunk = (reviewId) => async (dispatch) => {
     } else {
         return response.json();
     }
+};
+
+export const updateSpotThunk = (spot) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spot.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(spot)
+    })
+    const updatedSpot = await response.json();
+
+    if (response.ok) {
+        dispatch(updateSpot(updatedSpot));
+    }
+
+    return updatedSpot;
 }
 
 const initialState = { 
@@ -223,7 +243,8 @@ const spotsReducer = (state = initialState, action) => {
             ],
         };
     case CREATE_SPOT: 
-      return { ...state, allSpots: { ...state.allSpots, [action.newSpot.id]: action.newSpot, } };
+    case UPDATE_SPOT:
+      return { ...state, allSpots: { ...state.allSpots, [action.spot.id]: action.spot, } };
     case CREATE_SPOT_IMAGE:
      return {
         ...state,
@@ -282,7 +303,7 @@ const spotsReducer = (state = initialState, action) => {
             }, 0) / ((state.spotDetails.numReviews - 1) || 1) 
             ,
         },
-      }
+      } 
     default:
       return state;
   }

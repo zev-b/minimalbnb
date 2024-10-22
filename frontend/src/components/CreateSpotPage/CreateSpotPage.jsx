@@ -1,14 +1,16 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { createSpotImagesThunk, createSpotThunk } from '../../store/spots';
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createSpotImagesThunk, createSpotThunk, fetchSpotDetails, updateSpotThunk } from '../../store/spots';
 import { useDispatch, useSelector } from "react-redux";
 import './CreateSpotPage.css'
 
-function CreateSpotPage() {
+function CreateSpotPage({ manage }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { spotId } = useParams();
 
-    const userId = useSelector(state => state.session.user?.id)
+    const userId = useSelector(state => state.session.user?.id);
+    const spotDetails = useSelector(state => state.spots.spotDetails);
 
     const [country, setCountry] = useState("");
     const [streetAddress, setStreetAddress] = useState("");
@@ -22,6 +24,41 @@ function CreateSpotPage() {
     const [previewImageUrl, setPreviewImageUrl] = useState("");
     const [imageUrls, setImageUrls] = useState(["", "", "", ""]);
     const [errors, setErrors] = useState({ imageUrls: [] });
+
+    useEffect(() => {
+        dispatch(fetchSpotDetails(spotId));            
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (spotId) {
+            // console.log("\n===== spotId ====\n", spotId)
+            if (spotDetails && Object.values(spotDetails).length) {
+              setCountry(spotDetails.country);
+              setStreetAddress(spotDetails.address);
+              setCity(spotDetails.city);
+              setState(spotDetails.state);
+              setLatitude(spotDetails.lat);
+              setLongitude(spotDetails.lng);
+              setDescription(spotDetails.description);
+              setName(spotDetails.name);
+              setPrice(spotDetails.price);
+            }
+        } else {
+            setCountry("");
+            setStreetAddress("");
+            setCity("");
+            setState("");
+            setLatitude("");
+            setLongitude("");
+            setDescription("");
+            setName("");
+            setPrice("");
+        }
+    }, [spotDetails, spotId])
+
+    useEffect(() => {
+
+    }, [errors])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,18 +77,21 @@ function CreateSpotPage() {
         if (!name) validations.name = "Name is required";
         if (!price) validations.price = "Price is required";
         if (price < 1) validations.price = 'Price per day must be a positive number';
-        if (!previewImageUrl) validations.previewImageUrl = "Preview image is required";
 
-        const validUrl = /\.(?:png|jpg|jpeg)$/i;
-        if (!validUrl.test(previewImageUrl)) {
-            validations.previewImageUrl = "Preview Image URL needs to end in .png, .jpg, or .jpeg";
-        }
-
-        imageUrls.forEach((url, index) => {
-            if (url && !validUrl.test(url)) {
-                validations.imageUrls[index] = `Image URL needs to end in .png, .jpg, or .jpeg`;
+        if (!manage) {
+            if (!previewImageUrl) validations.previewImageUrl = "Preview image is required";
+    
+            const validUrl = /\.(?:png|jpg|jpeg)$/i;
+            if (!validUrl.test(previewImageUrl)) {
+                validations.previewImageUrl = "Preview Image URL needs to end in .png, .jpg, or .jpeg";
             }
-        });
+    
+            imageUrls.forEach((url, index) => {
+                if (url && !validUrl.test(url)) {
+                    validations.imageUrls[index] = `Image URL needs to end in .png, .jpg, or .jpeg`;
+                }
+            });
+        }
 
         setErrors(validations);
 
@@ -66,25 +106,39 @@ function CreateSpotPage() {
             price,
             lng: longitude,
             lat: latitude,
-            previewImageUrl,
+            // previewImageUrl,
             // imageUrls,
         };
 
-        const createdSpot = await dispatch(createSpotThunk(newSpot)); 
+        let createdSpot;
 
-        if (createdSpot.errors) {
-            return;
+        if (!manage) {
+            try {
+                createdSpot = await dispatch(createSpotThunk(newSpot)); 
+            } catch (res) {
+                return setErrors((await res.json()).errors);
+            }
+            
+            const imagesToSend = [{ url: previewImageUrl, preview: true }];
+
+            imageUrls.forEach((url) => {
+            if (url) {
+                imagesToSend.push({ url, preview: false });
+            }
+            });
+            
+            dispatch(createSpotImagesThunk(imagesToSend, createdSpot.id));
+        } else {
+            newSpot.id = spotId;
+
+            try {
+                createdSpot = await dispatch(updateSpotThunk(newSpot));
+            } catch (res) {
+                // const errorMessages = (await res.json()).errors;
+                // console.log(errorMessages)
+                return setErrors((await res.json()).errors);
+            }
         }
-        
-        const imagesToSend = [{ url: previewImageUrl, preview: true }];
-
-        imageUrls.forEach((url) => {
-          if (url) {
-            imagesToSend.push({ url, preview: false });
-          }
-        });
-        
-        dispatch(createSpotImagesThunk(imagesToSend, createdSpot.id));
 
         navigate(`/spots/${createdSpot.id}`);
     };
@@ -92,7 +146,7 @@ function CreateSpotPage() {
 
     return (
         <form className="create-spot-form" onSubmit={handleSubmit}>
-            <h1>Create a New Spot</h1>
+            <h1>{spotId ? 'Update Your' : 'Create a New'} Spot</h1>
 
              {/* Location Section */}
              <section>
@@ -119,7 +173,7 @@ function CreateSpotPage() {
                     required
                 />
                 </label>
-                {errors.streetAddress && <p className="error">{errors.streetAddress}</p>}
+                {(errors.streetAddress || errors.address) && <p className="error">{errors.streetAddress || errors.address}</p>}
                 <label>
                     City
                 <input
@@ -152,7 +206,7 @@ function CreateSpotPage() {
                     required
                     />
                     </label>
-                    {errors.latitude && <p className="error">{errors.latitude}</p>}
+                    {(errors.latitude || errors.lat) && <p className="error">{errors.latitude || errors.lat}</p>}
                 <label>
                   Longitude
                 <input
@@ -163,7 +217,7 @@ function CreateSpotPage() {
                     required
                     />
                     </label>
-                    {errors.longitude && <p className="error">{errors.longitude}</p>}
+                    {(errors.longitude || errors.lng) && <p className="error">{errors.longitude || errors.lng}</p>}
             </section>
 
             <hr />
@@ -216,7 +270,9 @@ function CreateSpotPage() {
             <hr />
 
             {/* Image URL Section */}
-            <section>
+            {!manage &&  (
+                <>
+                <section className={manage? "hidden" : ""}>
                 <h3>Liven up your spot with photos</h3>
                 <p>Submit a link to at least one photo to publish your spot.</p>
                 <input
@@ -224,7 +280,7 @@ function CreateSpotPage() {
                     placeholder="Preview Image URL"
                     value={previewImageUrl}
                     onChange={(e) => setPreviewImageUrl(e.target.value)}
-                    required
+                    required={!manage}
                 />
                 {errors.previewImageUrl && <p className="error">{errors.previewImageUrl}</p>}
                 
@@ -246,9 +302,12 @@ function CreateSpotPage() {
             </section>
 
             <hr />
+            </>
+                )
+            }
 
             {/* Submit Button */}
-            <button type="submit">Create Spot</button>
+            <button type="submit">{spotId ? 'Update' : 'Create'} Spot</button>
         </form>
     )
 }

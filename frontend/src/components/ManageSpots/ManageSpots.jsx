@@ -23,17 +23,11 @@ function ManageSpots() {
     setUserSpots(Object.values(allSpots).filter(spot => spot.ownerId === user?.id));
   }, [allSpots, user]);
 
-//   const handleUpdateSpot = (spotId) => {
-//     navigate(`/spots/${spotId}/edit`);
-//   };
+  const handleUpdateSpot = (e, spotId) => {
+    e.stopPropagation();
+    navigate(`/spots/${spotId}/edit`);
+  };
 
-//   const handleDeleteSpot = (spotId) => {
-//     dispatch(deleteSpotThunk(spotId)).then((success) => {
-//         if (success) {
-//           // Optionally, show a success message
-//         }
-//       });
-//   };
 
   return (
     <div className="manage-spots-container">
@@ -47,7 +41,9 @@ function ManageSpots() {
                 <h3>{spot.city}, {spot.state}</h3>
                 <p>${parseFloat(spot.price).toFixed(2)} / night</p>
                 <div className="spot-rating"><RiStarSFill className="star-icon"/> {spot.avgRating > 0 ? spot.avgRating.toFixed(2) : 'New'}</div>
-                <button className="update-spot-button" onClick={(e) => { e.stopPropagation(); handleUpdateSpot(spot.id); }}>Update</button>
+
+                <button className="update-spot-button" onClick={(e) => handleUpdateSpot(e, spot.id)}>Update</button>
+
                 <OpenModalButton buttonText="Delete" className="delete-spot-button" modalComponent={<DelSpotModal spotId={spot.id}/>}/>
               </div>
             </div>
