@@ -10,26 +10,26 @@ const seedData = [
   {
     spotId: 1,
     userId: 3,
-    startDate: "2024-11-19",
-    endDate: "2024-11-20",
+    startDate: "2024-11-19T18:06:17Z",
+    endDate: "2024-11-20T18:06:17Z",
   },
   {
     spotId: 2,
     userId: 1,
-    startDate: "2024-11-26",
-    endDate: "2024-11-27",
+    startDate: "2024-11-26T18:06:17Z",
+    endDate: "2024-11-27T18:06:17Z",
   },
   {
     spotId: 3,
     userId: 2,
-    startDate: "2024-10-18",
-    endDate: "2024-10-19",
+    startDate: "2024-10-18T18:06:17Z",
+    endDate: "2024-10-19T18:06:17Z",
   },
   {
     spotId: 4,
     userId: 1,
-    startDate: "2024-10-31",
-    endDate: "2024-11-01",
+    startDate: "2024-10-31T18:06:17Z",
+    endDate: "2024-11-01T18:06:17Z",
   }
 ]
 
