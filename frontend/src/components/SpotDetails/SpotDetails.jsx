@@ -121,7 +121,7 @@ function SpotDetails() {
             <div className="callout-header">
                 <div>
 
-                <span className="price">${spot.price.toFixed(2)}</span> <span className="per-night">/ night</span>
+                <span className="price">${parseFloat(spot.price).toFixed(2)}</span> <span className="per-night">/ night</span>
                 </div>
             <span className="rating-summary"><RiStarSFill className="first-star-icon"/> {ratingDisplay}{reviewSummary}
             </span>
