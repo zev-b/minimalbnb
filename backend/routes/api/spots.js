@@ -214,7 +214,7 @@ router.get('/', async (req, res) => {
         };
     }
 
-    console.log(`\n === QueryOptions ===`, queryOptions);
+    // console.log(`\n === QueryOptions ===`, queryOptions);
 
     const allSpots = await Spot.findAll(queryOptions); 
 
@@ -613,7 +613,7 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async (req,res) => {
 
     const spotExists = await Spot.findByPk(spotId);
 
-    console.log(userId);
+    // console.log(userId);
 
     // if (spotId === userId)
 
@@ -641,7 +641,7 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async (req,res) => {
         ]
     });
 
-    console.log(`\n ===BOOKING=== \n`, booking);
+    // console.log(`\n ===BOOKING=== \n`, booking);
 
     if (userId === spotExists.ownerId) {
         // const currUser = await User.findOne({

@@ -95,7 +95,7 @@ router.delete('/:bookingId', restoreUser, requireAuth, async (req, res) => {
     if (!booking) {
         return res.status(404).json({ message: "Booking couldn't be found" })
     }
-    console.log(`\n====Booking====\n`, booking)
+    // console.log(`\n====Booking====\n`, booking)
     if ((booking.userId !== currUserId || booking.Spot.ownerId !== currUserId)) {
         return res.status(403).json({ message: "Booking must belong to the current user or the Spot must belong to the current user" })
     } 
