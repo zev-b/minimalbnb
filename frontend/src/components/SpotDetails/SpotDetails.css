@@ -6,41 +6,71 @@
   
   .spot-images {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    /* gap: 10px;
+    margin-bottom: 20px; */
   }
   
   .large-image {
     width: 50%;
-    height: 400px;
+    /* height: 400px; */
     /* object-fit: cover; */
+    padding-right: 2px;
   }
   
-  .small-images {
+  /* .small-images {
     display: flex;
     flex-direction: column;
     gap: 10px;
+  } */ 
+
+  .small-images {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+     */
+    grid-template:
+    '. .'
+    '. .';
+    gap: 2px;
+    max-width: 50%;
+    aspect-ratio: 1 / 1; 
+    /* height: 400px;  */
   }
   
-  .small-image {
+  /* .small-image {
     width: 150px;
     height: 100px;
+    object-fit: cover;
+  } */ 
+
+  .small-image {
+    max-width: 100%; 
+    max-height: 100%; 
     object-fit: cover;
   }
   
   .spot-hosted-description {
     margin-top: 20px;
   }
+
+  .spot-callout-description {
+    display: flex;
+  }
   
   .callout-box {
-    border: 1px solid #ddd;
+    border: 2px solid #0d0d0d;
+    border-radius: 15px;
     padding: 20px;
-    margin-top: 20px;
+    margin-top: 15px;
+    width: 1700px;
+    margin-bottom: 15px;
   }
   
   .callout-header {
     font-size: 24px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   
   .per-night {
@@ -48,27 +78,36 @@
   }
   
   .rating-summary {
-    margin-top: 10px;
+    display: flex;
+    /* margin-top: 10px; */
     font-size: 18px;
+    /* margin-left: 85px; */
+    /* justify-content: flex-end; */
   }
   
   .reserve-button {
-    margin-top: 20px;
-    padding: 10px 20px;
+    margin-top: 4px;
+    width: 100%;
+    /* padding: 10px 25px; */
     background-color: #ff5a5f;
     color: white;
     border: none;
     cursor: pointer;
+    align-self: center;
+  }
+
+  .reserve-button:hover {
+    background-color: #96060b;
   }
   
   .reviews-section {
     margin-top: 25px;
   }
   
-  .review-item {
+  /* .review-item {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
-  }
+  } */
   
   .review-item h3 {
     font-size: 18px;
@@ -84,5 +123,18 @@
   display:flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
+  background-color: rgb(211, 215, 219);
 }
 
+.post-review-button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+} 
+
+li.review-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}

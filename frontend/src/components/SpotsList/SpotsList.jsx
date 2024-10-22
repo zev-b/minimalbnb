@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSpots } from "../../store/spots";
+import { fetchSpots, fetchReviews } from "../../store/spots";
 import { useNavigate } from "react-router-dom";
 import './SpotsList.css';
 // import spot from "../../../../backend/db/models/spot";
@@ -12,12 +12,18 @@ function SpotsList() {
     const spots = useSelector(state => state.spots.allSpots);
     // console.log(spots);
 
+
+    // useEffect(() => {
+    //     dispatch(fetchSpots());
+    // }, [dispatch]);
+
     useEffect(() => {
-        dispatch(fetchSpots());
-    }, [dispatch]);
+        dispatch(fetchSpots())
+          .then((spots) => spots.forEach((spot) => dispatch(fetchReviews(spot.id))));
+      }, [dispatch]);
 
 
-    const spotsArray = Object.values(spots);
+    // const spotsArray = Object.values(spots);
     
     // console.log("Spots Array:", spotsArray);
 
@@ -28,7 +34,7 @@ function SpotsList() {
 
     return (
         <div className="spots-list">
-            {spotsArray.map((spot) => (
+            {Object.values(spots).map((spot) => (
                 <div 
                 key={spot.id}
                 className="spot-tile"

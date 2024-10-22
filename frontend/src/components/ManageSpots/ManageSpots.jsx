@@ -1,35 +1,50 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch, } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { fetchUserSpotsThunk } from '../../store/spots';
 import './ManageSpots.css';
+import { RiStarSFill } from "react-icons/ri";
+
 
 function ManageSpots() {
-  const spots = useSelector(state => state.spots.userSpots);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);   
+  const allSpots = useSelector(state => state.spots.allSpots);
+  const [userSpots, setUserSpots] = useState([]);
 
-  const handleUpdateSpot = (spotId) => {
-    navigate(`/spots/${spotId}/edit`);
-  };
+  useEffect(() => {
+    dispatch(fetchUserSpotsThunk()); 
+  }, [dispatch]);
 
-  const handleDeleteSpot = (spotId) => {
-    dispatch(deleteSpotThunk(spotId)).then((success) => {
-        if (success) {
-          // Optionally, show a success message
-        }
-      });
-  };
+  useEffect(() => { 
+    setUserSpots(Object.values(allSpots).filter(spot => spot.ownerId === user?.id));
+  }, [allSpots, user]);
+
+//   const handleUpdateSpot = (spotId) => {
+//     navigate(`/spots/${spotId}/edit`);
+//   };
+
+//   const handleDeleteSpot = (spotId) => {
+//     dispatch(deleteSpotThunk(spotId)).then((success) => {
+//         if (success) {
+//           // Optionally, show a success message
+//         }
+//       });
+//   };
 
   return (
     <div className="manage-spots-container">
       <h1>Manage Spots</h1>
-      {spots && spots.length > 0 ? (
+      {userSpots && userSpots.length > 0 ? (
         <div className="spots-grid">
-          {spots.map((spot) => (
+          {userSpots.map((spot) => (
             <div key={spot.id} className="spot-tile" onClick={() => navigate(`/spots/${spot.id}`)}>
               <img src={spot.previewImage} alt={spot.name} />
               <div className="spot-details">
                 <h3>{spot.city}, {spot.state}</h3>
-                <p>${spot.price} / night</p>
-                <div className="spot-rating">{spot.avgRating} ★</div>
+                <p>${parseFloat(spot.price).toFixed(2)} / night</p>
+                <div className="spot-rating"><RiStarSFill className="star-icon"/> {spot.avgRating > 0 ? spot.avgRating.toFixed(2) : 'New'}</div>
                 <button className="update-spot-button" onClick={(e) => { e.stopPropagation(); handleUpdateSpot(spot.id); }}>Update</button>
                 <button className="delete-spot-button" onClick={(e) => { e.stopPropagation(); handleDeleteSpot(spot.id); }}>Delete</button>
               </div>
@@ -38,7 +53,7 @@ function ManageSpots() {
         </div>
       ) : (
         <div>
-          <p>No spots found. <Link to='/spots/new'>Create a New Spot</Link></p>
+          <p>No spots found. <Link to='/spots/new'><button>Create a New Spot</button></Link></p>
         </div>
       )}
     </div>

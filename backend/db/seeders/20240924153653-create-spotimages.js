@@ -69,7 +69,22 @@ const seedData = [
     spotId: 3,
     url: 'https://i.ibb.co/drMVWMV/bleachers2.png',
     preview: false,
+  },
+  {
+    spotId: 3,
+    url: 'https://i.ibb.co/4M0vsYK/bleachers3.png',
+    preview: false,
   }, 
+  {
+    spotId: 3,
+    url: 'https://i.ibb.co/br1c9zK/bleachers4.png',
+    preview: false,
+  }, 
+  {
+    spotId: 3,
+    url: 'https://i.ibb.co/k4L9Bwk/bleachers5.png',
+    preview: false,
+  },
 
   {
     spotId: 4, 

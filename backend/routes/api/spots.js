@@ -343,7 +343,7 @@ router.get('/:spotId', async (req, res) => {
             createdAt: spotById.createdAt,
             updatedAt: spotById.updatedAt,
             numReviews: numReviews,
-            avgStarRating: avgRating,
+            avgRating: avgRating,
             SpotImages: spotById.SpotImages,
             Owner: {
                 id: spotById.User.id,
@@ -427,6 +427,7 @@ router.post('/:spotId/images', restoreUser, requireAuth, async (req, res, next) 
             id: newImage.id,
             url: newImage.url,
             preview: newImage.preview,
+            spotId: spotById.id
         }
         
         res.status(201).json(returnInfo);
@@ -592,7 +593,14 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, async (req, res, next)
                 stars,
             });
     
-            res.status(201).json(newReview);
+            res.status(201).json({
+                ...newReview.toJSON(),
+                User: {
+                  id: req.user.id,
+                  firstName: req.user.firstName,
+                  lastName: req.user.lastName,
+                },
+            });
             
         } catch (error) {
             next(error);

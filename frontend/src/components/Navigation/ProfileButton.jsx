@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { HiMiniUser } from "react-icons/hi2";
 import { CiMenuBurger } from "react-icons/ci";
 import * as sessionActions from '../../store/session';
@@ -13,6 +14,8 @@ import './Navigation.css';
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
   
@@ -41,6 +44,7 @@ function ProfileButton({ user }) {
       e.preventDefault();
       dispatch(sessionActions.logout());
       closeMenu();
+      navigate('/');
     };
   
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -56,6 +60,9 @@ function ProfileButton({ user }) {
             <>
               <li>Hello, {user.username}</li>
               <li>{user.email}</li>
+              <li>
+                <button onClick={() => navigate('/spots/manage-spots')}>Manage Spots</button>
+              </li>
               <li>
                 <button onClick={logout}>Log Out</button>
               </li>

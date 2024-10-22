@@ -28,7 +28,7 @@ const seedData = [
   },
   {
     spotId: 3,
-    userId: 1,
+    userId: 8,
     review: "After the team lost the game in the 9th inning, I knew I couldn't just go home like everyone else. I replayed that base-hit in my head all night.",
     stars: 4,
   },

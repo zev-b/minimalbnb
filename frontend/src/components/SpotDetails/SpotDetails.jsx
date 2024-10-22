@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchReviews, fetchSpotDetails } from "../../store/spots";
 import './SpotDetails.css';
@@ -11,31 +11,69 @@ import ReviewFormModal from "../ReviewFormModal/ReviewFormModal";
 function SpotDetails() {
     const { spotId } = useParams();
     const dispatch = useDispatch();
+
     const spot = useSelector((state) => state.spots.spotDetails);
     const reviews = useSelector((state) => state.spots.reviews);
     const sessionUser = useSelector((state) => state.session.user);
     const { openModal } = useModal();
 
+    const [loaded, setLoaded] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
+    const [hasPostedReview, setHasPostedReview] = useState(false);
+    const [ratingDisplay, setRatingDisplay] = useState('');
+    const [reviewSummary, setReviewSummary] = useState('');
+
     // console.log("spotId from URL:", spotId);
 
+
+    // useEffect(() => {
+    //     dispatch(fetchSpotDetails(spotId)).then(() => setLoaded(true));
+    //     dispatch(fetchReviews(spotId)).then(() => setLoaded(true));
+    // }, [dispatch, spotId]); 
+
     useEffect(() => {
-        dispatch(fetchSpotDetails(spotId));
-        dispatch(fetchReviews(spotId));
+        const loadData = async () => {
+            try {
+                await dispatch(fetchSpotDetails(spotId));
+                await dispatch(fetchReviews(spotId));
+                setLoaded(true);
+            } catch (error) {
+                console.error("Error fetching spot details or reviews:", error);
+                setLoaded(true);
+            }
+        };
+        loadData();
     }, [dispatch, spotId]);
 
+    
+    useEffect(() => {
+        if (spot) {
+            setIsOwner(sessionUser?.id === spot.Owner?.id);
+            setHasPostedReview(reviews.some(review => review.userId === sessionUser?.id));
+            setRatingDisplay(spot.avgRating ? `${spot.avgRating.toFixed(2)}` : 'New');
+            setReviewSummary(spot.numReviews > 0
+                ? `${ratingDisplay} · ${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`
+                : ratingDisplay)
+        }
+    }, [reviews, sessionUser, spot])
 
-    if (!spot) return <p>En route...</p>
+    
+    // if (!spot) return <p>En route...</p>
 
-    const { name, city, state, country, SpotImages, description, price, Owner, avgStarRating, numReviews } = spot;
+    // if (!loaded || !spot || Object.keys(spot).length === 0) {
+    //     return <p>En route...</p>;
+    // }
+    
+    // const { name, city, state, country, SpotImages, description, price, Owner, avgStarRating, numReviews } = spot;
+    
+    // const ratingDisplay = spot.avgRating ? `${spot.avgRating.toFixed(2)}` : 'New';
 
-    const ratingDisplay = avgStarRating ? `${avgStarRating.toFixed(2)}` : 'New';
+    // const reviewSummary = spot.numReviews > 0
+    // ? `${ratingDisplay} · ${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`
+    // : ratingDisplay;
 
-    const reviewSummary = numReviews > 0
-    ? `${ratingDisplay} · ${numReviews} ${numReviews === 1 ? 'Review' : 'Reviews'}`
-    : ratingDisplay;
-
-    const hasPostedReview = reviews.some(review => review.userId === sessionUser?.id);
-    const isOwner = sessionUser?.id === Owner?.id;
+    // const hasPostedReview = reviews.some(review => review.userId === sessionUser?.id);
+    // const isOwner = sessionUser?.id === spot.Owner?.id;
 
 
     const handleReserveClick = () => {
@@ -46,49 +84,57 @@ function SpotDetails() {
         openModal(<ReviewFormModal spotId={spotId} />); 
     };
 
-    return (
+    return loaded ? (
+    // return (
         <div className="spot-details-container">
-            <h1>{name}</h1>
-            <p>{city}, {state}, {country}</p>
+            <h1>{spot.name}</h1>
+            <p>{spot.city}, {spot.state}, {spot.country}</p>
             
             {/* images */}
             <div className="spot-images">
-            <img className="large-image" src={SpotImages.find(img => img.preview)?.url || SpotImages[0].url} alt="Main spot" />
+            <img className="large-image" src={spot.SpotImages.find(img => img.preview)?.url || spot.SpotImages[0].url} alt="Main spot" />
             <div className="small-images">
-                {SpotImages.filter(img => !img.preview).slice(0, 4).map((image, index) => (
+                {spot.SpotImages.filter(img => !img.preview).slice(0, 4).map((image, index) => (
                 <img key={index} className="small-image" src={image.url} alt={`Image ${index + 1}`} />
                 ))}
             </div>
             </div>
 
             {/* Hosted By and Description */}
+            <div className="spot-callout-description">
             <div className="spot-hosted-description">
-            <h2>Hosted by {Owner.firstName} {Owner.lastName}</h2>
-            <p>{description}</p>
+            <h2>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
+            <p>{spot.description}</p>
             </div>
 
             {/* Callout Box */}
             <div className="callout-box">
             <div className="callout-header">
-                <span className="price">${price.toFixed(2)}</span> <span className="per-night">/ night</span>
+                <div>
+
+                <span className="price">${spot.price.toFixed(2)}</span> <span className="per-night">/ night</span>
+                </div>
+            <span className="rating-summary"><RiStarSFill className="first-star-icon"/> {reviewSummary}
+            </span>
             </div>
-            <div className="rating-summary"><RiStarSFill className="first-star-icon"/> {reviewSummary}</div>
             <button className="reserve-button" onClick={handleReserveClick}>Reserve</button>
             </div>
+            </div>
+            <hr />
 
+
+            {/* Reviews */}
+            <div className="reviews-section">
+            <h2><RiStarSFill className="star-icon"/>{reviewSummary}</h2>
                 {/* Post Review Button */}
             {sessionUser && !isOwner && !hasPostedReview && (
                 <button className="post-review-button" onClick={handlePostReviewClick}>
                     Post Your Review
                 </button>
             )}
-
-            {/* Reviews */}
-            <div className="reviews-section">
-            <h2><RiStarSFill className="star-icon"/>{reviewSummary}</h2>
             {reviews.length > 0 ? (
                 <ul className="review-bricks">
-                {reviews.map((review) => (
+                {reviews.map((review) => review.spotId === spot.id && (
                     <li key={review.id} className="review-item">
                     <h3>{review.User.firstName}</h3>
                     <p>{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
@@ -101,7 +147,8 @@ function SpotDetails() {
             )}
             </div>
         </div>
-    );
+    // )
+    ) : <p>En route...</p>
 }
 
 export default SpotDetails;
