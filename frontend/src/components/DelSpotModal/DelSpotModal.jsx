@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { deleteSpotThunk } from "../../store/spots";
+import './DelSpotModal.css';
 
 
 const DelSpotModal = ({ spotId }) => {
@@ -21,9 +23,9 @@ const DelSpotModal = ({ spotId }) => {
         <div className="delete-modal">
       <div className="modal-content">
         <h2>Confirm Delete</h2>
-        <p>Are you sure you want to remove this spot?</p>
+        <p>Are you sure you want to remove this spot from the listings?</p>
         <div className="modal-buttons">
-          <button className="delete-button" onClick={handleDelete}>
+          <button className="delete-button-yes" onClick={handleDelete}>
             Yes (Delete Spot)
           </button>
           <button className="cancel-button" onClick={closeModal}>

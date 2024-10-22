@@ -7,6 +7,7 @@ const CREATE_SPOT = 'spots/CREATE_SPOT';
 const CREATE_SPOT_IMAGE = 'spots/CREATE_SPOT_IMAGES';
 const CREATE_REVIEW = 'spots/CREATE_REVIEW';
 const LOAD_USER_SPOTS = 'spots/LOAD_USER_SPOTS';
+const DEL_SPOT = 'spots/DEL_SPOT';
 
 
 
@@ -51,6 +52,11 @@ export const loadUserSpots = (spots) => ({
       type: LOAD_USER_SPOTS,
       spots: normalizeSpots(spots)
   })
+
+export const deleteSpot = (spotId) => ({
+    type: DEL_SPOT,
+    spotId
+})
 
 // export const fetchSpots = () => async (dispatch) => {
 //     const response = await fetch('/api/spots');
@@ -164,7 +170,18 @@ export const fetchUserSpotsThunk = () => async (dispatch) => {
         const data = await response.json();
         dispatch(loadUserSpots(data.Spots))
     }
-}
+};
+
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'DELETE'
+    })
+    if (response.ok) {
+        dispatch(deleteSpot(spotId));
+    } else {
+        return response.json();
+    }
+};
 
 const initialState = { 
     allSpots: {}, 
@@ -180,9 +197,6 @@ const spotsReducer = (state = initialState, action) => {
       return { ...state, allSpots: { ...state.allSpots, ...action.spots } };
     case LOAD_SPOT_DETAILS: 
       return { ...state, spotDetails: action.spot };
-    // case LOAD_REVIEWS: 
-    // console.log(`\n === reviews in state ===\n`, reviews)
-    //   return { ...state, reviews: action.reviews };
     case LOAD_REVIEWS:
         return {
             ...state,
@@ -207,10 +221,6 @@ const spotsReducer = (state = initialState, action) => {
         },
         },
     };
-    // case CREATE_REVIEW: 
-    //  return {
-    //     ...state, reviews: [...state.reviews, action.review]
-    //  }
     case CREATE_REVIEW: 
         return {
         ...state,
@@ -231,6 +241,11 @@ const spotsReducer = (state = initialState, action) => {
         },
         reviews: [...state.reviews, action.review]
         }
+    case DEL_SPOT: 
+      return {
+        ...state,
+        allSpots: Object.fromEntries(Object.entries(state.allSpots).filter(([ id ]) => id != action.spotId))
+    }
     default:
       return state;
   }
