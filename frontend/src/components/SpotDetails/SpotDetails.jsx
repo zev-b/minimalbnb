@@ -110,27 +110,28 @@ function SpotDetails() {
             </div>
 
             {/* Hosted By and Description */}
-            <div className="spot-callout-description">
-            <div className="spot-hosted-description">
-            <h2>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
-            <p>{spot.description}</p>
-            </div>
-
-            {/* Callout Box */}
-            <div className="callout-box">
-            <div className="callout-header">
-                <div>
-
-                <span className="price">${parseFloat(spot.price).toFixed(2)}</span> <span className="per-night">/ night</span>
+            <div className="middle-container">
+                <div className="spot-callout-description">
+                    <div className="spot-hosted-description">
+                    <h2>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
+                    <p>{spot.description}</p>
                 </div>
-            <span className="rating-summary"><RiStarSFill className="first-star-icon"/> {ratingDisplay}{reviewSummary}
-            </span>
-            </div>
-            <button className="reserve-button" onClick={handleReserveClick}>Reserve</button>
-            </div>
-            </div>
-            <hr />
 
+                    {/* Callout Box */}
+                    <div className="callout-box">
+                        <div className="callout-header">
+                        <div>
+                            <span className="price">${parseFloat(spot.price).toFixed(2)}</span> <span className="per-night">/ night</span>
+                        </div>
+                        <span className="rating-summary"><RiStarSFill className="first-star-icon"/> {ratingDisplay}{reviewSummary}
+                        </span>
+                        </div>
+                        <button className="reserve-button" onClick={handleReserveClick}>Reserve</button>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
 
             {/* Reviews */}
             <div className="reviews-section">
@@ -159,7 +160,7 @@ function SpotDetails() {
             )}
             </div>
         </div>
-    // )
+        
     ) : <p>En route...</p>
 }
 

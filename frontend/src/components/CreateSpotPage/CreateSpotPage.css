@@ -31,7 +31,7 @@
 .create-spot-form input,
 .create-spot-form textarea {
     width: 100%;
-    padding: 12px;
+    padding: 5px;
     margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -41,7 +41,7 @@
 
 .create-spot-form textarea {
     height: 100px;
-    resize: vertical;
+    resize: none;
 }
 
 .error {
@@ -53,16 +53,23 @@
 .create-spot-form label {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 8px;
+    align-items: center;
+    /* margin-bottom: 8px; */
 }
 
 .create-spot-form .location-fields {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
+    /* align-items: center; */
 }
 
 .create-spot-form .location-fields input {
-    width: 48%; 
+    width: 75%; 
+}
+
+.price input{
+    margin-left: 5px;
+    width: 33%;
 }
 
 .create-spot-form hr {

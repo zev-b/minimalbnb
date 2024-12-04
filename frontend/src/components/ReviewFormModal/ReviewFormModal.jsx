@@ -47,6 +47,7 @@ const ReviewFormModal = ({ spotId }) => {
           placeholder="Leave your review here..."
           value={review}
           onChange={(e) => setReview(e.target.value)}
+          required
         />
   
         {errors.stars && <p className="error">{errors.stars}</p>}

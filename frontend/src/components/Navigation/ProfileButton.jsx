@@ -61,7 +61,11 @@ function ProfileButton({ user }) {
               <li>Hello, {user.username}</li>
               <li>{user.email}</li>
               <li>
-                <button onClick={() => navigate('/spots/manage-spots')}>Manage Spots</button>
+                <button 
+                  onClick={() => {
+                      navigate('/spots/manage-spots')
+                      closeMenu()
+                    }}>Manage Spots</button>
               </li>
               <li>
                 <button onClick={logout}>Log Out</button>
@@ -73,11 +77,13 @@ function ProfileButton({ user }) {
                 itemText="Log In"
                 onItemClick={closeMenu}
                 modalComponent={<LoginFormModal />}
+                className="btn-in-dropdwn"
               />
               <OpenModalMenuItem
                 itemText="Sign Up"
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
+                className="btn-in-dropdwn"
               />
             </>
           )}

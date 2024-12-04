@@ -40,10 +40,14 @@
   
   .spot-hosted-description {
     margin-top: 20px;
+    max-width: 100%;
+    justify-content: space-between;
   }
 
   .spot-callout-description {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
   
   .callout-box {
@@ -51,8 +55,16 @@
     border-radius: 15px;
     padding: 20px;
     margin-top: 15px;
-    width: 1700px;
+    min-width: 400px;
+    width: 400px;
+    max-width: 400px;
     margin-bottom: 15px;
+  }
+
+  .middle-container {
+    display: flex;
+    justify-content: space-between;
+    /* padding: 0; */
   }
   
   .callout-header {
@@ -106,6 +118,8 @@
   align-items: flex-start;
   justify-content: center;
   background-color: rgb(211, 215, 219);
+  margin-top: 15px;
+  gap: 10px;
 }
 
 .post-review-button {

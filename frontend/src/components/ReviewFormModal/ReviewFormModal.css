@@ -1,9 +1,34 @@
 .star-icon2 {
-    font-size: 25px;
-    color: #ccc; 
-    cursor: pointer;
-  }
+  font-size: 25px;
+  color: #ccc; 
+  cursor: pointer;
+}
   
-  .star-icon2.filled {
-    color: #FFD700; 
+.star-icon2.filled {
+  color: #FFD700; 
+}
+
+.star-rating {
+  display: flex;
+}
+
+.review-form-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+  height: 37vh;
+  width: 20vw;
+  max-height: 100%;
+  max-width: 100%;
+
+  > textarea {
+    resize: none;
+    height: 7.5lh;
+    width: 80%;
   }
+
+  > button:hover {
+    background-color: black;
+  }
+}

@@ -22,6 +22,16 @@ a {
     }
 } 
 
+textarea {
+    resize: none;
+}
+
+.error {
+    color: red;
+    font-size: 0.85em;
+    margin-top: -5px;
+}
+
 .playwrite-us-modern-logo {
     font-family: "Playwrite US Modern", cursive;
     font-optical-sizing: auto;

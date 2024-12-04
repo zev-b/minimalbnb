@@ -155,7 +155,7 @@ function CreateSpotPage({ manage }) {
             <h1>{spotId ? 'Update your' : 'Create a New'} Spot</h1>
 
              {/* Location Section */}
-             <section>
+             <section className="location-fields">
                 <h3>Where&apos;s your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation.</p>
                 <label>
@@ -260,7 +260,7 @@ function CreateSpotPage({ manage }) {
             <hr />
             
             {/* Price Section */}
-            <section>
+            <section className="price">
                 <h3>Set a base price for your spot</h3>
                 <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
                 $<input
