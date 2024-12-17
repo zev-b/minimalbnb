@@ -23,10 +23,15 @@ List of application features.
 A visualization of the relationship between data.
 
 
-# Splash Page
+# Splash / Home Page
 ![alt text](image.png)
 # Log In
-
+![alt text](image-1.png)
 # Sign Up
-
-# Home Page
+![alt text](image-2.png)
+# Spot Details Page
+![alt text](image-3.png)
+# Post Review Modal
+![alt text](image-4.png)
+# Create a Spot Page
+![alt text](image-5.png)
