@@ -24,7 +24,7 @@ A visualization of the relationship between data.
 
 
 # Splash Page
-
+![alt text](image.png)
 # Log In
 
 # Sign Up
