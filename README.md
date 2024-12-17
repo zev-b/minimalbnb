@@ -35,3 +35,5 @@ A visualization of the relationship between data.
 ![alt text](image-4.png)
 # Create a Spot Page
 ![alt text](image-5.png)
+# Manage Spots Page
+![alt text](image-6.png)
