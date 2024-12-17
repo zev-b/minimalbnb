@@ -33,7 +33,7 @@ A visualization of the relationship between data.
 ![alt text](image-3.png)
 # Post Review Modal
 ![alt text](image-4.png)
-# Create a Spot Page
+# Create a Spot Form
 ![alt text](image-5.png)
 # Manage Spots Page
 ![alt text](image-6.png)
