@@ -24,16 +24,16 @@ A visualization of the relationship between data.
 
 
 # Splash / Home Page
-![alt text](image-7.png)
+![alt text](readme-assets/image-7.png)
 # Log In
-![alt text](image-1.png)
+![alt text](readme-assets/image-1.png)
 # Sign Up
-![alt text](image-2.png)
+![alt text](readme-assets/image-2.png)
 # Spot Details Page
-![alt text](image-3.png)
+![alt text](readme-assets/image-3.png)
 # Post Review Modal
-![alt text](image-4.png)
+![alt text](readme-assets/image-4.png)
 # Create a Spot Form
-![alt text](image-5.png)
+![alt text](readme-assets/image-5.png)
 # Manage Spots Page
-![alt text](image-6.png)
+![alt text](readme-assets/image-6.png)
